@@ -1,10 +1,10 @@
 .App {
   text-align: center;
-  background-color: #e0e0e0; /* 调整背景颜色为稍微深一点的灰色 */
+  background-color: #e6e6e6; 
 }
 
 .App-logo {
-  height: 40px; /* 调整为固定高度 */
+  height: 40px; 
   pointer-events: none;
 }
 
@@ -27,6 +27,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.App-title {
+  color: white;
 }
 
 @keyframes App-logo-spin {

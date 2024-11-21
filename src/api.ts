@@ -1,4 +1,4 @@
-export const fetchCurrentTime = async () => {
+export const fetchPing = async () => {
   const response = await fetch('http://localhost:8080/api/v1/ping');
   if (!response.ok) {
     throw new Error('Error fetching time');

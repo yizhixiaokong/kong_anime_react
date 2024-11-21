@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from 'antd';
-import { fetchCurrentTime, fetchMessage } from './api';
+import { fetchPing, fetchMessage } from './api';
+import './Home.css'; // 引入样式文件
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -10,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      fetchCurrentTime()
+      fetchPing()
         .then(time => setCurrentTime(time))
         .catch(error => console.error('Error fetching time:', error));
     }, 1000);
@@ -24,15 +25,17 @@ function Home() {
   }, []);
 
   return (
-    <>
-      <Title level={1}>小空的根据地</Title>
+    <div className="home-container">
+      <Title level={1} className="home-title">让我康康小空的根据地里有什么好宝贝</Title>
       <Paragraph>
-        <Text strong>当前时间:</Text> {currentTime}
+        <Text strong>{message || <span>&nbsp;</span>}</Text>
       </Paragraph>
-      <Paragraph>
-        <Text strong>{message}</Text>
-      </Paragraph>
-    </>
+      {currentTime && (
+        <Paragraph>
+          <Text strong>当前时间:</Text> {currentTime}
+        </Paragraph>
+      )}
+    </div>
   );
 }
 

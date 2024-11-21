@@ -32,7 +32,7 @@ function AnimeList() {
   }, [page, pageSize]);
 
   return (
-    <div style={{ width: '40%', margin: '0 auto', border: '2px solid #d9d9d9', padding: '20px', backgroundColor: '#f5f5f5' }}>
+    <div style={{ width: '40%', margin: '0 auto', border: '2px solid #d9d9d9', padding: '20px', backgroundColor: '#ffffff' }}>
       <Title level={1}>动漫列表</Title>
       <Divider  variant="dashed" style={{  borderColor: '#7cb305' }} />
       <List
@@ -50,16 +50,16 @@ function AnimeList() {
                   title={anime.Name}
                   description={anime.Aliases}
                 />
-                <div style={{ textAlign: 'left', marginLeft: '10px' }}>
+                <div style={{ textAlign: 'center'}}>
                   <Text strong>分类:</Text> {anime.Categories.map(category => category.Name).join(', ')}
                 </div>
-                <div style={{ textAlign: 'left', marginLeft: '10px' }}>
+                <div style={{ textAlign: 'center'}}>
                   <Text strong>标签:</Text> {anime.Tags.map(tag => tag.Name).join(', ')}
                 </div>
-                <div style={{ textAlign: 'left', marginLeft: '10px' }}>
+                <div style={{ textAlign: 'center'}}>
                   <Text strong>制作公司:</Text> {anime.Production}
                 </div>
-                <div style={{ textAlign: 'left', marginLeft: '10px' }}>
+                <div style={{ textAlign: 'center'}}>
                   <Text strong>季度:</Text> {anime.Season} <Text strong>集数:</Text> {anime.Episodes}
                 </div>
               </Col>

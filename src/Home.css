@@ -1,0 +1,12 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: calc(100vh - 64px); /* 假设导航栏高度为64px */
+  padding: 20px;
+}
+
+.home-title {
+  margin-bottom: 20px;
+}
+
