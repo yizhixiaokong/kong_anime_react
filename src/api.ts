@@ -46,6 +46,13 @@ export const createAnime = async (anime: any) => {
   return handleResponse(response);
 };
 
+export const deleteAnime = async (id: string) => {
+  const response = await fetch(`${BASE_URL}/animes/${id}`, {
+    method: "DELETE",
+  });
+  return handleResponse(response);
+};
+
 export const fetchCategories = async () => {
   const response = await fetch(`${BASE_URL}/categories`);
   return handleResponse(response);

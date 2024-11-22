@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { List, Pagination, Typography, Row, Col, Divider, Tag, Modal, Tooltip, message } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import { fetchAnimes } from "./api";
+import { List, Pagination, Typography, Row, Col, Divider, Tag, Modal, Tooltip, message, Button } from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { fetchAnimes, deleteAnime } from "./api";
 import EditAnimeForm from "./EditAnimeForm";
+import AddAnimeForm from "./AddAnimeForm";
 
 const { Title, Text } = Typography;
 
@@ -25,6 +26,7 @@ const AnimeList: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [editingAnime, setEditingAnime] = useState<Anime | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
 
   useEffect(() => {
     fetchAnimes(page.toString(), pageSize.toString())
@@ -55,6 +57,45 @@ const AnimeList: React.FC = () => {
     setEditingAnime(null);
   };
 
+  const showAddModal = () => {
+    setIsAddModalVisible(true);
+  };
+
+  const handleAddCancel = () => {
+    setIsAddModalVisible(false);
+  };
+
+  const showDeleteConfirm = (anime: Anime) => {
+    Modal.confirm({
+      title: `确认删除 ${anime.Name} 吗？`,
+      content: '删除后将无法恢复',
+      okText: '确认',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        deleteAnime(anime.ID)
+          .then(() => {
+            message.success(`${anime.Name} 已删除`);
+            fetchAnimes(page.toString(), pageSize.toString()).then((data) => {
+              const transformedAnimes = data.animes.map((anime: any) => ({
+                ...anime,
+                Aliases: anime.Aliases.split(","),
+                Categories: anime.Categories.map((category: any) => category.Name),
+                Tags: anime.Tags.map((tag: any) => tag.Name),
+              }));
+              setAnimes(transformedAnimes);
+              setTotal(data.total);
+            });
+          })
+          .catch((error) => {
+            console.error("Error deleting anime:", error);
+            const errorMessage = error.response?.data?.error || error.message || error;
+            message.error(`删除动漫失败，请重试: ${errorMessage}`);
+          });
+      },
+    });
+  };
+
   const renderAnimeItem = (anime: Anime) => (
     <List.Item key={anime.ID} style={{ padding: "10px 0" }}>
       <Row gutter={16} align="middle">
@@ -69,6 +110,9 @@ const AnimeList: React.FC = () => {
                   {anime.Name}
                   <Tooltip title="编辑">
                     <EditOutlined style={{ marginLeft: "10px" }} onClick={() => showEditModal(anime)} />
+                  </Tooltip>
+                  <Tooltip title="删除">
+                    <DeleteOutlined style={{ marginLeft: "10px" }} onClick={() => showDeleteConfirm(anime)} />
                   </Tooltip>
                 </div>
               }
@@ -90,7 +134,17 @@ const AnimeList: React.FC = () => {
 
   return (
     <div style={{ width: "40%", margin: "0 auto", border: "2px solid #d9d9d9", padding: "20px", backgroundColor: "#ffffff" }}>
-      <Title level={1}>动漫列表</Title>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Title level={1}>动漫列表</Title>
+        <Tooltip title="新增动漫">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<PlusOutlined />}
+            onClick={showAddModal}
+          />
+        </Tooltip>
+      </div>
       <Divider variant="dashed" style={{ borderColor: "#7cb305" }} />
       <List itemLayout="vertical" size="large" dataSource={animes} renderItem={renderAnimeItem} />
       <div style={{ textAlign: "right", marginTop: "20px" }}>
@@ -127,6 +181,23 @@ const AnimeList: React.FC = () => {
             }}
           />
         )}
+      </Modal>
+      <Modal title="新增动漫" open={isAddModalVisible} onCancel={handleAddCancel} footer={null}>
+        <AddAnimeForm
+          onClose={() => {
+            handleAddCancel();
+            fetchAnimes(page.toString(), pageSize.toString()).then((data) => {
+              const transformedAnimes = data.animes.map((anime: any) => ({
+                ...anime,
+                Aliases: anime.Aliases.split(","),
+                Categories: anime.Categories.map((category: any) => category.Name),
+                Tags: anime.Tags.map((tag: any) => tag.Name),
+              }));
+              setAnimes(transformedAnimes);
+              setTotal(data.total);
+            });
+          }}
+        />
       </Modal>
     </div>
   );

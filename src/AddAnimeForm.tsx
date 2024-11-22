@@ -1,22 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Divider,
-  Select,
-  Space,
-  Tag,
-  Tooltip,
-  AutoComplete,
-  message,
-} from "antd";
+import { Form, Input, Button, Divider, Select, Space, Tag, Tooltip, AutoComplete, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
-import { updateAnime, fetchCategories } from "./api";
+import { createAnime, fetchCategories } from "./api";
+
+interface AddAnimeFormProps {
+  onClose: () => void;
+}
 
 interface Anime {
-  ID: string;
+  ID?: string;
   Name: string;
   Aliases: string[];
   Categories: string[];
@@ -27,16 +20,11 @@ interface Anime {
   Image: string;
 }
 
-interface EditAnimeFormProps {
-  anime: Anime;
-  onClose: () => void;
-}
-
-const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
+const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
   const [form] = Form.useForm();
-  const [tags, setTags] = useState(anime.Tags);
-  const [aliases, setAliases] = useState(anime.Aliases);
-  const [categories, setCategories] = useState(anime.Categories);
+  const [tags, setTags] = useState<string[]>([]);
+  const [aliases, setAliases] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -60,26 +48,25 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
 
   const onFinish = async (values: any): Promise<void> => {
     try {
-      const updatedAnime: Anime = {
+      const anime: Anime = {
         ...values,
         Tags: tags,
         Aliases: aliases,
         Categories: categories,
         Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
       };
-      await updateAnime(anime.ID, updatedAnime);
+      await createAnime(anime);
       onClose();
     } catch (error) {
-      console.error("Error updating anime:", error);
+      console.error("Error creating anime:", error);
       const errorMessage = (error as any).response?.data?.error || (error as any).message || error;
-      message.error(`修改失败，请重试: ${errorMessage}`);
+      message.error(`新增失败，请重试: ${errorMessage}`);
     }
   };
 
   const handleTagChange = (newTags: string[]) => setTags(newTags);
   const handleAliasChange = (newAliases: string[]) => setAliases(newAliases);
-  const handleCategoryChange = (newCategories: string[]) =>
-    setCategories(newCategories);
+  const handleCategoryChange = (newCategories: string[]) => setCategories(newCategories);
 
   const handleInputConfirm = (
     setter: React.Dispatch<React.SetStateAction<string[]>>,
@@ -192,7 +179,6 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
     <Form
       form={form}
       layout="vertical"
-      initialValues={anime}
       onFinish={onFinish}
     >
       <Form.Item name="Name" label="名称">
@@ -310,4 +296,4 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
   );
 };
 
-export default EditAnimeForm;
+export default AddAnimeForm;
