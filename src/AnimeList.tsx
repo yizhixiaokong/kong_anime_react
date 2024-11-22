@@ -19,7 +19,8 @@ import {
   StarOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
-import { fetchAnimes, deleteAnime } from "./api";
+import { useParams } from "react-router-dom";
+import { fetchAnimes, fetchAnimesBySeason, fetchAnimesByCategory, fetchAnimesByTag, deleteAnime } from "./api";
 import EditAnimeForm from "./EditAnimeForm";
 import AddAnimeForm from "./AddAnimeForm";
 
@@ -46,9 +47,21 @@ const AnimeList: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [visibleActions, setVisibleActions] = useState<string | null>(null);
+  const { season, category, tag } = useParams<{ season?: string, category?: string, tag?: string }>();
 
   useEffect(() => {
-    fetchAnimes(page.toString(), pageSize.toString())
+    let fetchData;
+    if (season) {
+      fetchData = fetchAnimesBySeason(page.toString(), pageSize.toString(), season);
+    } else if (category) {
+      fetchData = fetchAnimesByCategory(page.toString(), pageSize.toString(), category);
+    } else if (tag) {
+      fetchData = fetchAnimesByTag(page.toString(), pageSize.toString(), tag);
+    } else {
+      fetchData = fetchAnimes(page.toString(), pageSize.toString());
+    }
+
+    fetchData
       .then((data) => {
         const transformedAnimes = data.animes.map((anime: any) => ({
           ...anime,
@@ -65,7 +78,7 @@ const AnimeList: React.FC = () => {
           error.response?.data?.error || error.message || error;
         message.error(`获取动漫列表失败，请重试: ${errorMessage}`);
       });
-  }, [page, pageSize]);
+  }, [page, pageSize, season, category, tag]);
 
   const showEditModal = (anime: Anime) => {
     setEditingAnime(anime);

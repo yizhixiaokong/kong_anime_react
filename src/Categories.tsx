@@ -10,7 +10,15 @@ import {
   Input,
   Form,
 } from "antd";
-import { EditOutlined, DeleteOutlined, SearchOutlined, PlusOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+  PlusOutlined,
+  UnorderedListOutlined,
+  LeftSquareOutlined,
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import {
   fetchCategories,
   deleteCategory,
@@ -31,6 +39,7 @@ function Categories() {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const fetchAllCategories = () => {
     fetchCategories()
@@ -153,6 +162,10 @@ function Categories() {
       });
   };
 
+  const handleCategoryClick = (category: Category) => {
+    navigate(`/animes/category/${category.Name}`);
+  };
+
   return (
     <div style={{ width: "50%", margin: "0 auto" }}>
       <h1>分类管理</h1>
@@ -187,7 +200,22 @@ function Categories() {
         {categories.map((category) => (
           <Col xs={24} sm={12} md={8} lg={6} key={category.ID}>
             <Card
-              title={category.Name}
+              title={
+                <Tooltip title="点击跳转">
+                  <span
+                    onClick={() => handleCategoryClick(category)}
+                    style={{ cursor: "pointer", transition: "color 0.3s" }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = "#1890ff")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = "inherit")
+                    }
+                  >
+                    {category.Name} <LeftSquareOutlined />
+                  </span>
+                </Tooltip>
+              }
               bordered={false}
               actions={[
                 <Tooltip title="编辑">

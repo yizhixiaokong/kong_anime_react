@@ -53,6 +53,44 @@ export const deleteAnime = async (id: string) => {
   return handleResponse(response);
 };
 
+export const fetchAnimeSeasons = async () => {
+  const response = await fetch(`${BASE_URL}/animes/seasons`);
+  return handleResponse(response);
+};
+
+export const fetchAnimesBySeason = async (page = "1", pageSize = "10", season?: string) => {
+  const url = new URL(`${BASE_URL}/animes/season`);
+  url.searchParams.append("page", page);
+  url.searchParams.append("pageSize", pageSize);
+  if (season) {
+    url.searchParams.append("season", season);
+  }
+  const response = await fetch(url.toString());
+  return handleResponse(response);
+};
+
+export const fetchAnimesByCategory = async (page = "1", pageSize = "10", category?: string) => {
+  const url = new URL(`${BASE_URL}/animes/category`);
+  url.searchParams.append("page", page);
+  url.searchParams.append("pageSize", pageSize);
+  if (category) {
+    url.searchParams.append("category", category);
+  }
+  const response = await fetch(url.toString());
+  return handleResponse(response);
+};
+
+export const fetchAnimesByTag = async (page = "1", pageSize = "10", tag?: string) => {
+  const url = new URL(`${BASE_URL}/animes/tag`);
+  url.searchParams.append("page", page);
+  url.searchParams.append("pageSize", pageSize);
+  if (tag) {
+    url.searchParams.append("tag", tag);
+  }
+  const response = await fetch(url.toString());
+  return handleResponse(response);
+};
+
 export const fetchCategories = async () => {
   const response = await fetch(`${BASE_URL}/categories`);
   return handleResponse(response);
@@ -131,10 +169,3 @@ export const searchTags = async (name: string) => {
   return handleResponse(response);
 };
 
-export interface Tag {
-  ID: string;
-  Name: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string | null;
-}

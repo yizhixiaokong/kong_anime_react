@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import type { InputRef } from 'antd';
 import { Tag, Tooltip, Modal, Input, Button, message } from "antd";
 import { EditOutlined, SearchOutlined, UnorderedListOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { fetchTags, updateTag, searchTags, createTag, deleteTag } from "./api";
+import { fetchTags, updateTag, searchTags, createTag, deleteTag, fetchAnimesByTag } from "./api";
+import { useNavigate } from "react-router-dom";
 
 const colors = [
   "magenta",
@@ -33,6 +34,7 @@ function Tags() {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const inputRef = useRef<InputRef>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTags()
@@ -161,6 +163,18 @@ function Tags() {
     if (isEditing) setIsEditing(false);
   };
 
+  const handleTagClick = (tag: Tag) => {
+    if (isEditing || isDeleting) return; // 如果处于编辑或删除模式，不允许跳转
+    fetchAnimesByTag("1", "10", tag.Name)
+      .then(() => {
+        navigate(`/animes/tag/${tag.Name}`);
+      })
+      .catch((error) => {
+        console.error("Error fetching animes by tag:", error);
+        message.error(`获取动漫列表失败，请重试: ${error.message}`);
+      });
+  };
+
   return (
     <div style={{ width: "40%", margin: "0 auto" }}>
       <h1>标签管理</h1>
@@ -213,9 +227,10 @@ function Tags() {
           <Tag
             key={tag.ID}
             color={colors[index % colors.length]}
-            style={{ display: "flex", alignItems: "center", fontSize: "16px", padding: "8px" }}
+            style={{ display: "flex", alignItems: "center", fontSize: "16px", padding: "8px", cursor: "pointer" }}
             closable={isDeleting}
             onClose={() => handleDelete(tag)}
+            onClick={() => handleTagClick(tag)}
           >
             {tag.Name}
             {isEditing && (
