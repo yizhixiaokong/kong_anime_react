@@ -1,26 +1,52 @@
-export const fetchPing = async () => {
-  const response = await fetch('http://localhost:8080/api/v1/ping');
+const BASE_URL = "http://localhost:8080/api/v1";
+
+const handleResponse = async (response: Response) => {
   if (!response.ok) {
-    throw new Error('Error fetching time');
+    throw new Error(`Error: ${response.statusText}`);
   }
-  const data = await response.json();
+  return response.json();
+};
+
+export const fetchPing = async () => {
+  const response = await fetch(`${BASE_URL}/ping`);
+  const data = await handleResponse(response);
   return data.time;
 };
 
 export const fetchMessage = async () => {
-  const response = await fetch('http://localhost:8080/api/v1/hello');
-  if (!response.ok) {
-    throw new Error('Error fetching message');
-  }
-  const data = await response.json();
+  const response = await fetch(`${BASE_URL}/hello`);
+  const data = await handleResponse(response);
   return data.msg;
 };
 
-export const fetchAnimes = async (page = '1', pageSize = '10') => {
-  const response = await fetch(`http://localhost:8080/api/v1/animes?page=${page}&pageSize=${pageSize}`);
-  if (!response.ok) {
-    throw new Error('Error fetching animes');
-  }
-  const data = await response.json();
-  return data;
+export const fetchAnimes = async (page = "1", pageSize = "10") => {
+  const response = await fetch(`${BASE_URL}/animes?page=${page}&pageSize=${pageSize}`);
+  return handleResponse(response);
+};
+
+export const updateAnime = async (id: string, anime: any) => {
+  const response = await fetch(`${BASE_URL}/animes/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(anime),
+  });
+  return handleResponse(response);
+};
+
+export const createAnime = async (anime: any) => {
+  const response = await fetch(`${BASE_URL}/animes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(anime),
+  });
+  return handleResponse(response);
+};
+
+export const fetchCategories = async () => {
+  const response = await fetch(`${BASE_URL}/categories`);
+  return handleResponse(response);
 };

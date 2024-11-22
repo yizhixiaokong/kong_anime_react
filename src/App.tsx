@@ -1,40 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
-import type { MenuProps } from 'antd';
-import logo from './logo.svg';
-import './App.css';
-import Home from './Home';
-import AnimeList from './AnimeList';
-import Categories from './Categories';
-import Tags from './Tags';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { Layout, Menu } from "antd";
+import type { MenuProps } from "antd";
+import logo from "./logo.svg";
+import "./App.css";
+import Home from "./Home";
+import AnimeList from "./AnimeList";
+import Categories from "./Categories";
+import Tags from "./Tags";
 
 const { Header, Content } = Layout;
 
-const items: MenuProps['items'] = [
-  // {
-  //   key: '1',
-  //   label: <Link to="/">首页</Link>,
-  // },
+const items: MenuProps["items"] = [
   {
-    key: '1',
+    key: "animes",
     label: <Link to="/animes">动漫列表</Link>,
   },
   {
-    key: '2',
+    key: "content",
     label: "内容管理",
     children: [
       {
-        key: '2-1',
+        key: "content-categories",
         label: <Link to="/categories">分类管理</Link>,
       },
       {
-        key: '2-2',
+        key: "content-tags",
         label: <Link to="/tags">标签管理</Link>,
       },
     ],
   },
-
 ];
 
 function AppRoutes() {
@@ -55,11 +50,18 @@ function App() {
         <Header className="App-header">
           <div className="logo">
             <img src={logo} className="App-logo" alt="logo" />
-            <Link to="/" className="App-title">小空的根据地</Link>
+            <Link to="/" className="App-title">
+              小空的根据地
+            </Link>
           </div>
-          <Menu style={{marginLeft:'20px'}} theme="dark" mode="horizontal" items={items} />
+          <Menu
+            style={{ marginLeft: "20px" }}
+            theme="dark"
+            mode="horizontal"
+            items={items}
+          />
         </Header>
-        <Content style={{ padding: '20px' }}>
+        <Content style={{ padding: "20px" }}>
           <AppRoutes />
         </Content>
       </Layout>
