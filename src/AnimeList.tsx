@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { List, Pagination, Typography, Row, Col, Divider, Tag, Modal, Tooltip, message, Button } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  List,
+  Pagination,
+  Typography,
+  Row,
+  Col,
+  Divider,
+  Tag,
+  Modal,
+  Tooltip,
+  message,
+  Button,
+} from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  StarOutlined,
+  MoreOutlined,
+} from "@ant-design/icons";
 import { fetchAnimes, deleteAnime } from "./api";
 import EditAnimeForm from "./EditAnimeForm";
 import AddAnimeForm from "./AddAnimeForm";
@@ -27,6 +45,7 @@ const AnimeList: React.FC = () => {
   const [editingAnime, setEditingAnime] = useState<Anime | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [visibleActions, setVisibleActions] = useState<string | null>(null);
 
   useEffect(() => {
     fetchAnimes(page.toString(), pageSize.toString())
@@ -42,7 +61,8 @@ const AnimeList: React.FC = () => {
       })
       .catch((error) => {
         console.error("Error fetching animes:", error);
-        const errorMessage = error.response?.data?.error || error.message || error;
+        const errorMessage =
+          error.response?.data?.error || error.message || error;
         message.error(`获取动漫列表失败，请重试: ${errorMessage}`);
       });
   }, [page, pageSize]);
@@ -68,10 +88,10 @@ const AnimeList: React.FC = () => {
   const showDeleteConfirm = (anime: Anime) => {
     Modal.confirm({
       title: `确认删除 ${anime.Name} 吗？`,
-      content: '删除后将无法恢复',
-      okText: '确认',
-      okType: 'danger',
-      cancelText: '取消',
+      content: "删除后将无法恢复",
+      okText: "确认",
+      okType: "danger",
+      cancelText: "取消",
       onOk() {
         deleteAnime(anime.ID)
           .then(() => {
@@ -80,7 +100,9 @@ const AnimeList: React.FC = () => {
               const transformedAnimes = data.animes.map((anime: any) => ({
                 ...anime,
                 Aliases: anime.Aliases.split(","),
-                Categories: anime.Categories.map((category: any) => category.Name),
+                Categories: anime.Categories.map(
+                  (category: any) => category.Name
+                ),
                 Tags: anime.Tags.map((tag: any) => tag.Name),
               }));
               setAnimes(transformedAnimes);
@@ -89,18 +111,27 @@ const AnimeList: React.FC = () => {
           })
           .catch((error) => {
             console.error("Error deleting anime:", error);
-            const errorMessage = error.response?.data?.error || error.message || error;
+            const errorMessage =
+              error.response?.data?.error || error.message || error;
             message.error(`删除动漫失败，请重试: ${errorMessage}`);
           });
       },
     });
   };
 
+  const toggleActions = (id: string) => {
+    setVisibleActions(visibleActions === id ? null : id);
+  };
+
   const renderAnimeItem = (anime: Anime) => (
     <List.Item key={anime.ID} style={{ padding: "10px 0" }}>
       <Row gutter={16} align="middle">
         <Col span={6}>
-          <img src={anime.Image} alt={anime.Name} style={{ width: "100%", height: "100%" }} />
+          <img
+            src={anime.Image}
+            alt={anime.Name}
+            style={{ width: "100%", height: "100%" }}
+          />
         </Col>
         <Col span={18}>
           <div style={{ textAlign: "left", marginLeft: "20px" }}>
@@ -108,23 +139,53 @@ const AnimeList: React.FC = () => {
               title={
                 <div style={{ display: "flex", alignItems: "center" }}>
                   {anime.Name}
-                  <Tooltip title="编辑">
-                    <EditOutlined style={{ marginLeft: "10px" }} onClick={() => showEditModal(anime)} />
+
+                  <Tooltip title="更多">
+                    <MoreOutlined
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => toggleActions(anime.ID)}
+                    />
                   </Tooltip>
-                  <Tooltip title="删除">
-                    <DeleteOutlined style={{ marginLeft: "10px" }} onClick={() => showDeleteConfirm(anime)} />
-                  </Tooltip>
+                  {visibleActions === anime.ID && (
+                    <div
+                      style={{
+                        display: "flex",
+                        marginLeft: "10px",
+                        transition: "opacity 0.3s, transform 0.3s",
+                        transform: "scaleY(1)",
+                      }}
+                    >
+                      <Tooltip title="评分">
+                        <StarOutlined style={{ marginRight: "10px" }} />
+                      </Tooltip>
+                      <Tooltip title="编辑">
+                        <EditOutlined
+                          style={{ marginRight: "10px" }}
+                          onClick={() => showEditModal(anime)}
+                        />
+                      </Tooltip>
+                      <Tooltip title="删除">
+                        <DeleteOutlined
+                          onClick={() => showDeleteConfirm(anime)}
+                        />
+                      </Tooltip>
+                    </div>
+                  )}
                 </div>
               }
               description={anime.Aliases.join(", ")}
             />
             <Text strong>分类:</Text> {anime.Categories.join(" / ")}
             <div>
-              <Text strong>标签:</Text> {anime.Tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+              <Text strong>标签:</Text>{" "}
+              {anime.Tags.map((tag) => (
+                <Tag key={tag}>{tag}</Tag>
+              ))}
             </div>
             <Text strong>制作公司:</Text> {anime.Production}
             <div>
-              <Text strong>季度:</Text> {anime.Season} <Text strong>集数:</Text> {anime.Episodes}
+              <Text strong>季度:</Text> {anime.Season} <Text strong>集数:</Text>{" "}
+              {anime.Episodes}
             </div>
           </div>
         </Col>
@@ -133,8 +194,22 @@ const AnimeList: React.FC = () => {
   );
 
   return (
-    <div style={{ width: "40%", margin: "0 auto", border: "2px solid #d9d9d9", padding: "20px", backgroundColor: "#ffffff" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <div
+      style={{
+        width: "40%",
+        margin: "0 auto",
+        border: "2px solid #d9d9d9",
+        padding: "20px",
+        backgroundColor: "#ffffff",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <Title level={1}>动漫列表</Title>
         <Tooltip title="新增动漫">
           <Button
@@ -146,7 +221,12 @@ const AnimeList: React.FC = () => {
         </Tooltip>
       </div>
       <Divider variant="dashed" style={{ borderColor: "#7cb305" }} />
-      <List itemLayout="vertical" size="large" dataSource={animes} renderItem={renderAnimeItem} />
+      <List
+        itemLayout="vertical"
+        size="large"
+        dataSource={animes}
+        renderItem={renderAnimeItem}
+      />
       <div style={{ textAlign: "right", marginTop: "20px" }}>
         <Pagination
           align="end"
@@ -161,7 +241,12 @@ const AnimeList: React.FC = () => {
           }}
         />
       </div>
-      <Modal title="编辑动漫" open={isModalVisible} onCancel={handleCancel} footer={null}>
+      <Modal
+        title="编辑动漫"
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
         {editingAnime && (
           <EditAnimeForm
             key={editingAnime.ID}
@@ -172,7 +257,9 @@ const AnimeList: React.FC = () => {
                 const transformedAnimes = data.animes.map((anime: any) => ({
                   ...anime,
                   Aliases: anime.Aliases.split(","),
-                  Categories: anime.Categories.map((category: any) => category.Name),
+                  Categories: anime.Categories.map(
+                    (category: any) => category.Name
+                  ),
                   Tags: anime.Tags.map((tag: any) => tag.Name),
                 }));
                 setAnimes(transformedAnimes);
@@ -182,7 +269,12 @@ const AnimeList: React.FC = () => {
           />
         )}
       </Modal>
-      <Modal title="新增动漫" open={isAddModalVisible} onCancel={handleAddCancel} footer={null}>
+      <Modal
+        title="新增动漫"
+        open={isAddModalVisible}
+        onCancel={handleAddCancel}
+        footer={null}
+      >
         <AddAnimeForm
           onClose={() => {
             handleAddCancel();
@@ -190,7 +282,9 @@ const AnimeList: React.FC = () => {
               const transformedAnimes = data.animes.map((anime: any) => ({
                 ...anime,
                 Aliases: anime.Aliases.split(","),
-                Categories: anime.Categories.map((category: any) => category.Name),
+                Categories: anime.Categories.map(
+                  (category: any) => category.Name
+                ),
                 Tags: anime.Tags.map((tag: any) => tag.Name),
               }));
               setAnimes(transformedAnimes);
