@@ -57,7 +57,7 @@ function App() {
             <img src={logo} className="App-logo" alt="logo" />
             <Link to="/" className="App-title">小空的根据地</Link>
           </div>
-          <Menu theme="dark" mode="horizontal" items={items} />
+          <Menu style={{marginLeft:'20px'}} theme="dark" mode="horizontal" items={items} />
         </Header>
         <Content style={{ padding: '20px' }}>
           <AppRoutes />

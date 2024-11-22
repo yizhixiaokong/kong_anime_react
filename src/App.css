@@ -1,10 +1,10 @@
 .App {
   text-align: center;
-  background-color: #e6e6e6; 
+  background-color: #e6e6e6;
 }
 
 .App-logo {
-  height: 40px; 
+  height: 40px;
   pointer-events: none;
 }
 
@@ -19,10 +19,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   padding: 0 20px;
   font-size: calc(10px + 2vmin);
   color: white;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .App-link {
@@ -41,5 +42,3 @@
     transform: rotate(360deg);
   }
 }
-
-
