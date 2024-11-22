@@ -63,7 +63,6 @@ function Tags() {
           })
           .catch((error) => {
             console.error("Error searching tags:", error);
-            message.error(`搜索标签失败，请重试: ${error.message}`);
           });
       }
     }, 300);
@@ -118,7 +117,6 @@ function Tags() {
           })
           .catch((error) => {
             console.error("Error deleting tag:", error);
-            message.error(`删除标签失败，请重试: ${error.message}`);
           });
       },
     });
@@ -141,7 +139,6 @@ function Tags() {
         })
         .catch((error) => {
           console.error("Error adding tag:", error);
-          message.error(`新增标签失败，请重试: ${error.message}`);
         });
     } else {
       setInputVisible(false);
@@ -171,7 +168,6 @@ function Tags() {
       })
       .catch((error) => {
         console.error("Error fetching animes by tag:", error);
-        message.error(`获取动漫列表失败，请重试: ${error.message}`);
       });
   };
 

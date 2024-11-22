@@ -8,15 +8,16 @@ import Home from "./Home";
 import AnimeList from "./AnimeList";
 import AnimeSeasons from "./AnimeSeasons";
 import Categories from "./Categories";
+import TimeLine from "./TimeLine"
 import Tags from "./Tags";
 
 const { Header, Content } = Layout;
 
-// 动漫列表、季度番剧、追番时间轴、内容管理（分类管理、标签管理）
+// 番剧列表、季度番剧、追番时间轴、内容管理（分类管理、标签管理）
 const items: MenuProps["items"] = [
   {
     key: "animes",
-    label: <Link to="/animes">动漫列表</Link>,
+    label: <Link to="/animes">番剧列表</Link>,
   },
   {
     key: "seasons",
@@ -51,7 +52,7 @@ function AppRoutes() {
       <Route path="/animes/category/:category" element={<AnimeList />} />
       <Route path="/animes/tag/:tag" element={<AnimeList />} />
       <Route path="/seasons" element={<AnimeSeasons />} />
-      <Route path="/timeline" element={<Home />} />
+      <Route path="/timeline" element={<TimeLine />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/tags" element={<Tags />} />
     </Routes>

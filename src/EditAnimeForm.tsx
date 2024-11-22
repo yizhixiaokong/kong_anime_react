@@ -50,7 +50,9 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
     fetchCategories()
       .then((data) => {
         if (Array.isArray(data.categories)) {
-          setAllCategories(data.categories.map((category: any) => category.Name));
+          setAllCategories(
+            data.categories.map((category: any) => category.Name)
+          );
         } else {
           console.error("Error: fetchCategories did not return an array");
         }
@@ -59,21 +61,27 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
   }, []);
 
   const onFinish = async (values: any): Promise<void> => {
-    try {
-      const updatedAnime: Anime = {
-        ...values,
-        Tags: tags,
-        Aliases: aliases,
-        Categories: categories,
-        Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
-      };
-      await updateAnime(anime.ID, updatedAnime);
-      onClose();
-    } catch (error) {
-      console.error("Error updating anime:", error);
-      const errorMessage = (error as any).response?.data?.error || (error as any).message || error;
-      message.error(`修改失败，请重试: ${errorMessage}`);
-    }
+    const updatedAnime: Anime = {
+      ...values,
+      Tags: tags,
+      Aliases: aliases,
+      Categories: categories,
+      Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
+    };
+    console.log(updatedAnime)
+    updateAnime(anime.ID, updatedAnime)
+      .then((res) => {
+        console.log('res',res)
+        if (res?.status === 200) {
+          message.success("更新成功");
+        }
+        onClose();
+      }).catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        onClose();
+      });
   };
 
   const handleTagChange = (newTags: string[]) => setTags(newTags);
@@ -174,7 +182,8 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
                     categoryInputValue,
                     () => {},
                     setCategoryInputValue,
-                    (newCategory) => setAllCategories((prev) => [...prev, newCategory])
+                    (newCategory) =>
+                      setAllCategories((prev) => [...prev, newCategory])
                   )
                 }
               >
@@ -248,7 +257,7 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
       </Form.Item>
       <Form.Item name="Season" label="季度">
         <AutoComplete
-          options={seasonOptions.map(option => ({ value: option }))}
+          options={seasonOptions.map((option) => ({ value: option }))}
           onSearch={handleSeasonSearch}
           placeholder="输入年份-季度"
         />

@@ -38,6 +38,7 @@ function Categories() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const [formAdd] = Form.useForm();
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
@@ -48,9 +49,6 @@ function Categories() {
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
-        const errorMessage =
-          error.response?.data?.error || error.message || error;
-        message.error(`获取分类列表失败，请重试: ${errorMessage}`);
       });
   };
 
@@ -69,9 +67,6 @@ function Categories() {
           })
           .catch((error) => {
             console.error("Error searching categories:", error);
-            const errorMessage =
-              error.response?.data?.error || error.message || error;
-            message.error(`搜索分类失败，请重试: ${errorMessage}`);
           });
       }
     }, 300);
@@ -94,9 +89,6 @@ function Categories() {
           })
           .catch((error) => {
             console.error("Error deleting category:", error);
-            const errorMessage =
-              error.response?.data?.error || error.message || error;
-            message.error(`删除分类失败，请重试: ${errorMessage}`);
           });
       },
     });
@@ -111,6 +103,7 @@ function Categories() {
   const handleCancel = () => {
     setIsModalVisible(false);
     setEditingCategory(null);
+    form.resetFields();
   };
 
   const handleSave = (values: { name: string }) => {
@@ -130,9 +123,6 @@ function Categories() {
         })
         .catch((error) => {
           console.error("Error updating category:", error);
-          const errorMessage =
-            error.response?.data?.error || error.message || error;
-          message.error(`更新分类失败，请重试: ${errorMessage}`);
         });
     }
   };
@@ -143,6 +133,7 @@ function Categories() {
 
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
+    formAdd.resetFields();
   };
 
   const handleAddSave = (values: { name: string }) => {
@@ -156,9 +147,6 @@ function Categories() {
       })
       .catch((error) => {
         console.error("Error adding category:", error);
-        const errorMessage =
-          error.response?.data?.error || error.message || error;
-        message.error(`新增分类失败，请重试: ${errorMessage}`);
       });
   };
 
@@ -231,18 +219,46 @@ function Categories() {
           </Col>
         ))}
       </Row>
-      <Modal
-        title="编辑分类"
-        open={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        {editingCategory && (
-          <Form
-            form={form}
-            initialValues={{ name: editingCategory.Name }}
-            onFinish={handleSave}
-          >
+      {isModalVisible && (
+        <Modal
+          title="编辑分类"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          {editingCategory && (
+            <Form
+              form={form}
+              initialValues={{ name: editingCategory.Name }}
+              onFinish={handleSave}
+            >
+              <Form.Item
+                name="name"
+                label="分类名称"
+                rules={[{ required: true, message: "请输入分类名称" }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  保存
+                </Button>
+                <Button onClick={handleCancel} style={{ marginLeft: "10px" }}>
+                  取消
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
+        </Modal>
+      )}
+      {isAddModalVisible && (
+        <Modal
+          title="新增分类"
+          open={isAddModalVisible}
+          onCancel={handleAddCancel}
+          footer={null}
+        >
+          <Form form={formAdd} onFinish={handleAddSave}>
             <Form.Item
               name="name"
               label="分类名称"
@@ -254,37 +270,13 @@ function Categories() {
               <Button type="primary" htmlType="submit">
                 保存
               </Button>
-              <Button onClick={handleCancel} style={{ marginLeft: "10px" }}>
+              <Button onClick={handleAddCancel} style={{ marginLeft: "10px" }}>
                 取消
               </Button>
             </Form.Item>
           </Form>
-        )}
-      </Modal>
-      <Modal
-        title="新增分类"
-        open={isAddModalVisible}
-        onCancel={handleAddCancel}
-        footer={null}
-      >
-        <Form form={form} onFinish={handleAddSave}>
-          <Form.Item
-            name="name"
-            label="分类名称"
-            rules={[{ required: true, message: "请输入分类名称" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              保存
-            </Button>
-            <Button onClick={handleAddCancel} style={{ marginLeft: "10px" }}>
-              取消
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        </Modal>
+      )}
     </div>
   );
 }

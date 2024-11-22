@@ -20,7 +20,13 @@ import {
   MoreOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
-import { fetchAnimes, fetchAnimesBySeason, fetchAnimesByCategory, fetchAnimesByTag, deleteAnime } from "./api";
+import {
+  fetchAnimes,
+  fetchAnimesBySeason,
+  fetchAnimesByCategory,
+  fetchAnimesByTag,
+  deleteAnime,
+} from "./api";
 import EditAnimeForm from "./EditAnimeForm";
 import AddAnimeForm from "./AddAnimeForm";
 
@@ -47,14 +53,26 @@ const AnimeList: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [visibleActions, setVisibleActions] = useState<string | null>(null);
-  const { season, category, tag } = useParams<{ season?: string, category?: string, tag?: string }>();
+  const { season, category, tag } = useParams<{
+    season?: string;
+    category?: string;
+    tag?: string;
+  }>();
 
   useEffect(() => {
     let fetchData;
     if (season) {
-      fetchData = fetchAnimesBySeason(page.toString(), pageSize.toString(), season);
+      fetchData = fetchAnimesBySeason(
+        page.toString(),
+        pageSize.toString(),
+        season
+      );
     } else if (category) {
-      fetchData = fetchAnimesByCategory(page.toString(), pageSize.toString(), category);
+      fetchData = fetchAnimesByCategory(
+        page.toString(),
+        pageSize.toString(),
+        category
+      );
     } else if (tag) {
       fetchData = fetchAnimesByTag(page.toString(), pageSize.toString(), tag);
     } else {
@@ -76,7 +94,6 @@ const AnimeList: React.FC = () => {
         console.error("Error fetching animes:", error);
         const errorMessage =
           error.response?.data?.error || error.message || error;
-        message.error(`获取动漫列表失败，请重试: ${errorMessage}`);
       });
   }, [page, pageSize, season, category, tag]);
 
@@ -126,7 +143,6 @@ const AnimeList: React.FC = () => {
             console.error("Error deleting anime:", error);
             const errorMessage =
               error.response?.data?.error || error.message || error;
-            message.error(`删除动漫失败，请重试: ${errorMessage}`);
           });
       },
     });
@@ -223,8 +239,8 @@ const AnimeList: React.FC = () => {
           alignItems: "center",
         }}
       >
-        <Title level={1}>动漫列表</Title>
-        <Tooltip title="新增动漫">
+        <Title level={1}>番剧列表</Title>
+        <Tooltip title="新增番剧">
           <Button
             type="primary"
             shape="circle"
@@ -254,13 +270,13 @@ const AnimeList: React.FC = () => {
           }}
         />
       </div>
-      <Modal
-        title="编辑动漫"
-        open={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        {editingAnime && (
+      {editingAnime && isModalVisible && (
+        <Modal
+          title="编辑番剧"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
           <EditAnimeForm
             key={editingAnime.ID}
             anime={editingAnime}
@@ -280,32 +296,34 @@ const AnimeList: React.FC = () => {
               });
             }}
           />
-        )}
-      </Modal>
-      <Modal
-        title="新增动漫"
-        open={isAddModalVisible}
-        onCancel={handleAddCancel}
-        footer={null}
-      >
-        <AddAnimeForm
-          onClose={() => {
-            handleAddCancel();
-            fetchAnimes(page.toString(), pageSize.toString()).then((data) => {
-              const transformedAnimes = data.animes.map((anime: any) => ({
-                ...anime,
-                Aliases: anime.Aliases.split(","),
-                Categories: anime.Categories.map(
-                  (category: any) => category.Name
-                ),
-                Tags: anime.Tags.map((tag: any) => tag.Name),
-              }));
-              setAnimes(transformedAnimes);
-              setTotal(data.total);
-            });
-          }}
-        />
-      </Modal>
+        </Modal>
+      )}
+      {isAddModalVisible && (
+        <Modal
+          title="新增番剧"
+          open={isAddModalVisible}
+          onCancel={handleAddCancel}
+          footer={null}
+        >
+          <AddAnimeForm
+            onClose={() => {
+              handleAddCancel();
+              fetchAnimes(page.toString(), pageSize.toString()).then((data) => {
+                const transformedAnimes = data.animes.map((anime: any) => ({
+                  ...anime,
+                  Aliases: anime.Aliases.split(","),
+                  Categories: anime.Categories.map(
+                    (category: any) => category.Name
+                  ),
+                  Tags: anime.Tags.map((tag: any) => tag.Name),
+                }));
+                setAnimes(transformedAnimes);
+                setTotal(data.total);
+              });
+            }}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

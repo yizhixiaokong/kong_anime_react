@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Row, Col, Card, message, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
-import { LeftSquareOutlined} from "@ant-design/icons";
+import { LeftSquareOutlined } from "@ant-design/icons";
 import { fetchAnimeSeasons } from "./api";
+import spring from "./assets/spring.png";
+import summer from "./assets/summer.png";
+import autumn from "./assets/autumn.png";
+import winter from "./assets/winter.png";
 
 const { Title } = Typography;
-
+const { Meta } = Card;
 type Seasons = Map<string, Map<string, number>>;
 
 const seasonNames: { [key: string]: string } = {
@@ -13,6 +17,12 @@ const seasonNames: { [key: string]: string } = {
   "04": "春 4月新番",
   "07": "夏 7月新番",
   "10": "秋 10月新番",
+};
+const seassonImage: { [key: string]: string } = {
+  "01": winter,
+  "04": spring,
+  "07": summer,
+  "10": autumn,
 };
 
 const AnimeSeasons: React.FC = () => {
@@ -64,16 +74,20 @@ const AnimeSeasons: React.FC = () => {
               <Col span={6} key={season}>
                 <Tooltip title="点击跳转">
                   <Card
-                    title={
-                      <span>
-                        {seasonNames[season]} <LeftSquareOutlined/>
-                      </span>
-                    }
                     onClick={() => handleSeasonClick(year, season)}
-                    style={{ cursor: "pointer", transition: "transform 0.3s" }}
-                    hoverable
+                    cover={
+                      <img
+                        style={{ height: "100px" }}
+                        alt="example"
+                        src={seassonImage[season]}
+                      />
+                    }
+                    style={{
+                      cursor: "pointer",
+                      transition: "transform 0.3s",
+                    }}
                   >
-                    {seasons.get(year)!.get(season)} 部番剧
+                    <Meta title={seasons.get(year)!.get(season) + "部番剧"} />
                   </Card>
                 </Tooltip>
               </Col>

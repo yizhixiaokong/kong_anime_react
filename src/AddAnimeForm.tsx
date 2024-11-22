@@ -1,5 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Form, Input, Button, Divider, Select, Space, Tag, Tooltip, AutoComplete, message } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Divider,
+  Select,
+  Space,
+  Tag,
+  Tooltip,
+  AutoComplete,
+  message,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
 import { createAnime, fetchCategories } from "./api";
@@ -38,7 +49,9 @@ const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
     fetchCategories()
       .then((data) => {
         if (Array.isArray(data.categories)) {
-          setAllCategories(data.categories.map((category: any) => category.Name));
+          setAllCategories(
+            data.categories.map((category: any) => category.Name)
+          );
         } else {
           console.error("Error: fetchCategories did not return an array");
         }
@@ -47,26 +60,29 @@ const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
   }, []);
 
   const onFinish = async (values: any): Promise<void> => {
-    try {
-      const anime: Anime = {
-        ...values,
-        Tags: tags,
-        Aliases: aliases,
-        Categories: categories,
-        Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
-      };
-      await createAnime(anime);
-      onClose();
-    } catch (error) {
-      console.error("Error creating anime:", error);
-      const errorMessage = (error as any).response?.data?.error || (error as any).message || error;
-      message.error(`新增失败，请重试: ${errorMessage}`);
-    }
+    const anime: Anime = {
+      ...values,
+      Tags: tags,
+      Aliases: aliases,
+      Categories: categories,
+      Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
+    };
+    createAnime(anime)
+      .then((res) => {
+        if (res.status === 200) {
+          message.success("添加成功");
+        }
+        onClose();
+      })
+      .catch(() => {
+        onClose();
+      });
   };
 
   const handleTagChange = (newTags: string[]) => setTags(newTags);
   const handleAliasChange = (newAliases: string[]) => setAliases(newAliases);
-  const handleCategoryChange = (newCategories: string[]) => setCategories(newCategories);
+  const handleCategoryChange = (newCategories: string[]) =>
+    setCategories(newCategories);
 
   const handleInputConfirm = (
     setter: React.Dispatch<React.SetStateAction<string[]>>,
@@ -161,7 +177,8 @@ const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
                     categoryInputValue,
                     () => {},
                     setCategoryInputValue,
-                    (newCategory) => setAllCategories((prev) => [...prev, newCategory])
+                    (newCategory) =>
+                      setAllCategories((prev) => [...prev, newCategory])
                   )
                 }
               >
@@ -176,11 +193,7 @@ const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
   );
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      onFinish={onFinish}
-    >
+    <Form form={form} layout="vertical" onFinish={onFinish}>
       <Form.Item name="Name" label="名称">
         <Input />
       </Form.Item>
@@ -234,7 +247,7 @@ const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
       </Form.Item>
       <Form.Item name="Season" label="季度">
         <AutoComplete
-          options={seasonOptions.map(option => ({ value: option }))}
+          options={seasonOptions.map((option) => ({ value: option }))}
           onSearch={handleSeasonSearch}
           placeholder="输入年份-季度"
         />
