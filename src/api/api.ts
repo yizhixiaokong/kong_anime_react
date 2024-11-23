@@ -84,6 +84,8 @@ export const deleteCategory = (id: string) => del(`/categories/${id}`);
 export const searchCategories = (name: string) =>
   get(`/categories/search?name=${name}`);
 
+export const fetchCategoryStats = () => get(`/categories/stats`);
+
 // tag api
 export const fetchTags = () => get(`/tags`);
 
@@ -94,3 +96,5 @@ export const updateTag = (id: string, tag: any) => put(`/tags/${id}`, tag);
 export const deleteTag = (id: string) => del(`/tags/${id}`);
 
 export const searchTags = (name: string) => get(`/tags/search?name=${name}`);
+
+export const fetchTagStats = () => get(`/tags/stats`);

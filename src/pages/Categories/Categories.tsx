@@ -25,6 +25,7 @@ import {
   updateCategory,
   createCategory,
   searchCategories,
+  fetchCategoryStats,
 } from "@/api/api";
 
 interface Category {
@@ -40,15 +41,17 @@ function Categories() {
   const [form] = Form.useForm();
   const [formAdd] = Form.useForm();
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoryStats, setCategoryStats] = useState<{ [key: string]: number }>({});
   const navigate = useNavigate();
 
   const fetchAllCategories = () => {
-    fetchCategories()
-      .then((data) => {
+    Promise.all([fetchCategories(), fetchCategoryStats()])
+      .then(([data, stats]) => {
         setCategories(data.categories);
+        setCategoryStats(stats.category_stats);
       })
       .catch((error) => {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching categories or category stats:", error);
       });
   };
 
@@ -209,7 +212,7 @@ function Categories() {
                 </Tooltip>,
               ]}
             >
-              内容填充：{category.Name}
+              {categoryStats[category.Name] || 0} 部番剧
             </Card>
           </Col>
         ))}

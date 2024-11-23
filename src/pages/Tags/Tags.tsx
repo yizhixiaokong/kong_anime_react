@@ -15,6 +15,7 @@ import {
   createTag,
   deleteTag,
   fetchAnimesByTag,
+  fetchTagStats,
 } from "@/api/api";
 import { useNavigate } from "react-router-dom";
 
@@ -46,20 +47,22 @@ function Tags() {
   const [inputValue, setInputValue] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [tagStats, setTagStats] = useState<{ [key: string]: number }>({});
   const inputRef = useRef<InputRef>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTags()
-      .then((data) => {
+    Promise.all([fetchTags(), fetchTagStats()])
+      .then(([data, stats]) => {
         setTags(data.tags);
+        setTagStats(stats.tag_stats);
       })
       .catch((error) => {
-        console.error("Error fetching tags:", error);
+        console.error("Error fetching tags or tag stats:", error);
       });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { 
     const delayDebounceFn = setTimeout(() => {
       if (searchTerm.trim() === "") {
         fetchTags()
@@ -241,7 +244,7 @@ function Tags() {
             onClose={() => handleDelete(tag)}
             onClick={() => handleTagClick(tag)}
           >
-            {tag.Name}
+            {tag.Name} <span className="tag-count">({tagStats[tag.Name] || 0})</span>
             {isEditing && (
               <Tooltip title="编辑">
                 <EditOutlined
