@@ -25,7 +25,7 @@ import {
   updateCategory,
   createCategory,
   searchCategories,
-} from "./api";
+} from "@/api/api";
 
 interface Category {
   ID: string;

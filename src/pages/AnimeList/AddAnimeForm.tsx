@@ -13,10 +13,14 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
-import { updateAnime, fetchCategories } from "./api";
+import { createAnime, fetchCategories } from "@/api/api";
+
+interface AddAnimeFormProps {
+  onClose: () => void;
+}
 
 interface Anime {
-  ID: string;
+  ID?: string;
   Name: string;
   Aliases: string[];
   Categories: string[];
@@ -27,16 +31,11 @@ interface Anime {
   Image: string;
 }
 
-interface EditAnimeFormProps {
-  anime: Anime;
-  onClose: () => void;
-}
-
-const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
+const AddAnimeForm: React.FC<AddAnimeFormProps> = ({ onClose }) => {
   const [form] = Form.useForm();
-  const [tags, setTags] = useState(anime.Tags);
-  const [aliases, setAliases] = useState(anime.Aliases);
-  const [categories, setCategories] = useState(anime.Categories);
+  const [tags, setTags] = useState<string[]>([]);
+  const [aliases, setAliases] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -61,25 +60,21 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
   }, []);
 
   const onFinish = async (values: any): Promise<void> => {
-    const updatedAnime: Anime = {
+    const anime: Anime = {
       ...values,
       Tags: tags,
       Aliases: aliases,
       Categories: categories,
       Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
     };
-    console.log(updatedAnime)
-    updateAnime(anime.ID, {...updatedAnime})
+    createAnime(anime)
       .then((res) => {
-        console.log('res',res)
-        if (res?.status === 200) {
-          message.success("更新成功");
+        if (res.status === 200) {
+          message.success("添加成功");
         }
         onClose();
-      }).catch((err) => {
-        console.error(err);
       })
-      .finally(() => {
+      .catch(() => {
         onClose();
       });
   };
@@ -198,12 +193,7 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
   );
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      initialValues={anime}
-      onFinish={onFinish}
-    >
+    <Form form={form} layout="vertical" onFinish={onFinish}>
       <Form.Item name="Name" label="名称">
         <Input />
       </Form.Item>
@@ -319,4 +309,4 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
   );
 };
 
-export default EditAnimeForm;
+export default AddAnimeForm;

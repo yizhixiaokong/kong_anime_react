@@ -26,9 +26,9 @@ import {
   fetchAnimesByCategory,
   fetchAnimesByTag,
   deleteAnime,
-} from "./api";
-import EditAnimeForm from "./EditAnimeForm";
-import AddAnimeForm from "./AddAnimeForm";
+} from "@/api/api";
+import EditAnimeForm from "@/pages/AnimeList/EditAnimeForm";
+import AddAnimeForm from "@/pages/AnimeList/AddAnimeForm";
 
 const { Title, Text } = Typography;
 
@@ -92,8 +92,8 @@ const AnimeList: React.FC = () => {
       })
       .catch((error) => {
         console.error("Error fetching animes:", error);
-        const errorMessage =
-          error.response?.data?.error || error.message || error;
+        // const errorMessage =
+        //   error.response?.data?.error || error.message || error;
       });
   }, [page, pageSize, season, category, tag]);
 
@@ -141,8 +141,8 @@ const AnimeList: React.FC = () => {
           })
           .catch((error) => {
             console.error("Error deleting anime:", error);
-            const errorMessage =
-              error.response?.data?.error || error.message || error;
+            // const errorMessage =
+            //   error.response?.data?.error || error.message || error;
           });
       },
     });

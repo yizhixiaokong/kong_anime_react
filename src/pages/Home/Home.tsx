@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "antd";
-import { fetchPing, fetchMessage } from "./api";
-import "./Home.css"; // 引入样式文件
+import { fetchPing, fetchMessage } from "@/api/api";
+import "@/pages/Home/Home.css";
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -21,7 +21,7 @@ function Home() {
   useEffect(() => {
     fetchMessage()
       .then((res) => {
-        setMessage(res.message);
+        setMessage(res.msg);
       })
       .catch((error) => console.error("Error fetching message:", error));
   }, []);

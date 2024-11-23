@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Row, Col, Card, message, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
-import { LeftSquareOutlined } from "@ant-design/icons";
-import { fetchAnimeSeasons } from "./api";
-import spring from "./assets/spring.png";
-import summer from "./assets/summer.png";
-import autumn from "./assets/autumn.png";
-import winter from "./assets/winter.png";
+import { fetchAnimeSeasons } from "@/api/api";
+import spring from "@/assets/spring.png";
+import summer from "@/assets/summer.png";
+import autumn from "@/assets/autumn.png";
+import winter from "@/assets/winter.png";
 
 const { Title } = Typography;
 const { Meta } = Card;
 type Seasons = Map<string, Map<string, number>>;
 
-const seasonNames: { [key: string]: string } = {
-  "01": "冬 1月新番",
-  "04": "春 4月新番",
-  "07": "夏 7月新番",
-  "10": "秋 10月新番",
-};
 const seassonImage: { [key: string]: string } = {
   "01": winter,
   "04": spring,

@@ -40,8 +40,8 @@
   color: white;
 }
 
-:where(.css-dev-only-do-not-override-1x0dypw) a:hover{
- color: #dc6d58;
+:where(.css-dev-only-do-not-override-1x0dypw) a:hover {
+  color: #dc6d58;
 }
 @keyframes App-logo-spin {
   from {
@@ -86,25 +86,44 @@
 }
 :where(.css-dev-only-do-not-override-1x0dypw).ant-menu-submenu-popup {
   background-color: #eda294;
-
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-submenu-popup.ant-menu-submenu{
+:where(
+    .css-dev-only-do-not-override-1x0dypw
+  ).ant-menu-submenu-popup.ant-menu-submenu {
   background-color: #eda294;
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-submenu-popup>.ant-menu, :where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark>.ant-menu.ant-menu-submenu-popup>.ant-menu{
+:where(
+    .css-dev-only-do-not-override-1x0dypw
+  ).ant-menu-dark.ant-menu-submenu-popup
+  > .ant-menu,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu.ant-menu-submenu-popup
+  > .ant-menu {
   background-color: #eda294;
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark>.ant-menu .ant-menu-item-selected{
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu
+  .ant-menu-item-selected {
   background-color: #dc6d58;
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-btn.ant-btn-circle.ant-btn:hover,:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:hover {
+:where(
+    .css-dev-only-do-not-override-1x0dypw
+  ).ant-btn.ant-btn-circle.ant-btn:hover,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:hover {
   background-color: #cd5942;
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-btn.ant-btn-circle.ant-btn:active,:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:active {
+:where(
+    .css-dev-only-do-not-override-1x0dypw
+  ).ant-btn.ant-btn-circle.ant-btn:active,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:active {
   background-color: #cd5942;
 }
-:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover{
-  background-color: #cd5942; 
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  background-color: #cd5942;
 }
 :where(.css-dev-only-do-not-override-1x0dypw).ant-input-search
   > .ant-input-group

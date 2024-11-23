@@ -15,7 +15,7 @@ import {
   createTag,
   deleteTag,
   fetchAnimesByTag,
-} from "./api";
+} from "@/api/api";
 import { useNavigate } from "react-router-dom";
 
 const colors = [
