@@ -48,6 +48,8 @@ const AnimeSeasons: React.FC = () => {
     navigate(`/animes/season/${seasonParam}`);
   };
 
+  const sortedSeasons = ["01", "04", "07", "10"];
+
   return (
     <div
       className="app-container"
@@ -63,28 +65,30 @@ const AnimeSeasons: React.FC = () => {
         <div key={year}>
           <Title level={2}>{year} 年</Title>
           <Row gutter={[16, 16]}>
-            {Array.from(seasons.get(year)!.keys()).map((season) => (
-              <Col span={6} key={season}>
-                <Tooltip title="点击跳转">
-                  <Card
-                    onClick={() => handleSeasonClick(year, season)}
-                    cover={
-                      <img
-                        style={{ height: "100px" }}
-                        alt="example"
-                        src={seassonImage[season]}
-                      />
-                    }
-                    style={{
-                      cursor: "pointer",
-                      transition: "transform 0.3s",
-                    }}
-                  >
-                    <Meta title={seasons.get(year)!.get(season) + "部番剧"} />
-                  </Card>
-                </Tooltip>
-              </Col>
-            ))}
+            {sortedSeasons
+              .filter((season) => seasons.get(year)!.has(season))
+              .map((season) => (
+                <Col span={6} key={season}>
+                  <Tooltip title="点击跳转">
+                    <Card
+                      onClick={() => handleSeasonClick(year, season)}
+                      cover={
+                        <img
+                          style={{ height: "100px" }}
+                          alt="example"
+                          src={seassonImage[season]}
+                        />
+                      }
+                      style={{
+                        cursor: "pointer",
+                        transition: "transform 0.3s",
+                      }}
+                    >
+                      <Meta title={seasons.get(year)!.get(season) + "部番剧"} />
+                    </Card>
+                  </Tooltip>
+                </Col>
+              ))}
           </Row>
         </div>
       ))}
