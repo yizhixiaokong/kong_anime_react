@@ -1,8 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Layout, Menu, Input } from "antd";
-import type { MenuProps } from "antd";
-import logo from "@/assets/logo.png";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Layout } from "antd";
 import "@/App.css";
 import Home from "@/pages/Home/Home";
 import AnimeList from "@/pages/AnimeList/AnimeList";
@@ -10,39 +8,9 @@ import AnimeSeasons from "@/pages/AnimeSeasons/AnimeSeasons";
 import Categories from "@/pages/Categories/Categories";
 import TimeLine from "@/pages/TimeLine/TimeLine";
 import Tags from "@/pages/Tags/Tags";
+import NavigationBar from "@/components/NavigationBar";
 
-const { Search } = Input;
-const { Header, Content } = Layout;
-
-// 番剧列表、季度番剧、追番时间轴、内容管理（分类管理、标签管理）
-const items: MenuProps["items"] = [
-  {
-    key: "animes",
-    label: <Link to="/animes">番剧列表</Link>,
-  },
-  {
-    key: "seasons",
-    label: <Link to="/seasons">季度番剧</Link>,
-  },
-  {
-    key: "timeline",
-    label: <Link to="/timeline">追番时间轴</Link>,
-  },
-  {
-    key: "content",
-    label: "内容管理",
-    children: [
-      {
-        key: "content-categories",
-        label: <Link to="/categories">分类管理</Link>,
-      },
-      {
-        key: "content-tags",
-        label: <Link to="/tags">标签管理</Link>,
-      },
-    ],
-  },
-];
+const { Content } = Layout;
 
 function AppRoutes() {
   return (
@@ -64,36 +32,7 @@ function App() {
   return (
     <Router>
       <Layout className="App">
-        <Header className="App-header">
-          <div className="logo">
-            <div
-              style={{
-                height: "50px",
-                width: "50px",
-                borderRadius: "50px",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={logo}
-                className="App-logo"
-                alt="logo"
-                style={{ transform: "scale(2)", borderRadius: "50px" }}
-              />
-            </div>
-
-            <Link to="/" className="App-title">
-              小空的根据地
-            </Link>
-          </div>
-          <Menu
-            style={{ marginLeft: "20px" }}
-            theme="dark"
-            mode="horizontal"
-            items={items}
-          />
-          <Search placeholder="input search text" style={{ width: 200 }} />
-        </Header>
+        <NavigationBar />
         <Content
           style={{
             padding: "20px",

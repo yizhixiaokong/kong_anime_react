@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "antd";
-import { fetchPing, fetchMessage } from "@/api/api";
+import { fetchPing, fetchHello } from "@/api/api";
 import "@/pages/Home/Home.css";
 
 const { Paragraph, Text, Title } = Typography;
@@ -19,7 +19,7 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    fetchMessage()
+    fetchHello()
       .then((res) => {
         setMessage(res.msg);
       })

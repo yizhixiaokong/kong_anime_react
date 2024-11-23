@@ -32,14 +32,14 @@ const colors = [
   "purple",
 ];
 
-interface Tag {
+interface AnimeTag {
   ID: string;
   Name: string;
 }
 
 function Tags() {
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [editingTag, setEditingTag] = useState<Tag | null>(null);
+  const [tags, setTags] = useState<AnimeTag[]>([]);
+  const [editingTag, setEditingTag] = useState<AnimeTag | null>(null);
   const [newTagName, setNewTagName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
@@ -89,7 +89,7 @@ function Tags() {
     }
   }, [inputVisible]);
 
-  const handleEdit = (tag: Tag) => {
+  const handleEdit = (tag: AnimeTag) => {
     setEditingTag(tag);
     setNewTagName(tag.Name);
   };
@@ -115,7 +115,7 @@ function Tags() {
     setEditingTag(null);
   };
 
-  const handleDelete = (tag: Tag) => {
+  const handleDelete = (tag: AnimeTag) => {
     Modal.confirm({
       title: `确认删除标签 ${tag.Name} 吗？`,
       content: "删除后将无法恢复",
@@ -173,7 +173,7 @@ function Tags() {
     if (isEditing) setIsEditing(false);
   };
 
-  const handleTagClick = (tag: Tag) => {
+  const handleTagClick = (tag: AnimeTag) => {
     if (isEditing || isDeleting) return; // 如果处于编辑或删除模式，不允许跳转
     fetchAnimesByTag("1", "10", tag.Name)
       .then(() => {
