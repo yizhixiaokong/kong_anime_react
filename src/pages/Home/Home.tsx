@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "antd";
-import { fetchPing, fetchHello } from "@/api/api";
+import { fetchHello } from "@/api/api";
 import "@/pages/Home/Home.css";
 
 const { Paragraph, Text, Title } = Typography;
@@ -11,9 +11,9 @@ function Home() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      fetchPing()
-        .then((res) => setCurrentTime(res.time))
-        .catch((error) => console.error("Error fetching time:", error));
+      const now = new Date();
+      const formattedTime = now.toISOString().slice(0, 19).replace("T", " ");
+      setCurrentTime(formattedTime);
     }, 1000);
     return () => clearInterval(timer);
   }, []);
