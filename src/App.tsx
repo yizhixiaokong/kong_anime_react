@@ -20,6 +20,7 @@ function AppRoutes() {
       <Route path="/animes/season/:season" element={<AnimeList />} />
       <Route path="/animes/category/:category" element={<AnimeList />} />
       <Route path="/animes/tag/:tag" element={<AnimeList />} />
+      <Route path="/animes/search/:name" element={<AnimeList />} />
       <Route path="/seasons" element={<AnimeSeasons />} />
       <Route path="/timeline" element={<TimeLine />} />
       <Route path="/categories" element={<Categories />} />

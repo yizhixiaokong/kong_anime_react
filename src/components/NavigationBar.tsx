@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout, Menu, Input } from "antd";
 import type { MenuProps } from "antd";
 import logo from "@/assets/logo.png";
@@ -37,6 +37,14 @@ const items: MenuProps["items"] = [
 ];
 
 const NavigationBar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const onSearch = (value: string) => {
+    if (value) {
+      navigate(`/animes/search/${value}`);
+    }
+  };
+
   return (
     <Header className="App-header">
       <div className="logo">
@@ -66,7 +74,11 @@ const NavigationBar: React.FC = () => {
         mode="horizontal"
         items={items}
       />
-      <Search placeholder="番剧搜索" style={{ width: 200, marginLeft: "20px" }} />
+      <Search
+        placeholder="番剧搜索"
+        style={{ width: 200, marginLeft: "20px" }}
+        onSearch={onSearch}
+      />
     </Header>
   );
 };

@@ -25,6 +25,7 @@ import {
   fetchAnimesBySeason,
   fetchAnimesByCategory,
   fetchAnimesByTag,
+  fetchAnimesByName,
   deleteAnime,
 } from "@/api/api";
 import EditAnimeForm from "@/pages/AnimeList/EditAnimeForm";
@@ -53,10 +54,11 @@ const AnimeList: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [visibleActions, setVisibleActions] = useState<string | null>(null);
-  const { season, category, tag } = useParams<{
+  const { season, category, tag, name } = useParams<{
     season?: string;
     category?: string;
     tag?: string;
+    name?: string;
   }>();
 
   useEffect(() => {
@@ -75,6 +77,8 @@ const AnimeList: React.FC = () => {
       );
     } else if (tag) {
       fetchData = fetchAnimesByTag(page.toString(), pageSize.toString(), tag);
+    } else if (name) {
+      fetchData = fetchAnimesByName(page.toString(), pageSize.toString(), name);
     } else {
       fetchData = fetchAnimes(page.toString(), pageSize.toString());
     }
@@ -95,7 +99,7 @@ const AnimeList: React.FC = () => {
         // const errorMessage =
         //   error.response?.data?.error || error.message || error;
       });
-  }, [page, pageSize, season, category, tag]);
+  }, [page, pageSize, season, category, tag, name]);
 
   const showEditModal = (anime: Anime) => {
     setEditingAnime(anime);

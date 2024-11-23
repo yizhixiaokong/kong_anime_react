@@ -57,6 +57,20 @@ export const fetchAnimesByTag = (page = "1", pageSize = "10", tag?: string) => {
   return get(url.toString());
 };
 
+export const fetchAnimesByName = (
+  page = "1",
+  pageSize = "10",
+  name: string
+) => {
+  const url = new URL(`${BASE_URL}/animes/search`);
+  url.searchParams.append("page", page);
+  url.searchParams.append("pageSize", pageSize);
+  if (name) {
+    url.searchParams.append("name", name);
+  }
+  return get(url.toString());
+};
+
 // category api
 export const fetchCategories = () => get(`/categories`);
 
