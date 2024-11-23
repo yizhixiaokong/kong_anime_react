@@ -30,6 +30,7 @@ import {
 } from "@/api/api";
 import EditAnimeForm from "@/pages/AnimeList/EditAnimeForm";
 import AddAnimeForm from "@/pages/AnimeList/AddAnimeForm";
+import { useLocation } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -46,6 +47,7 @@ interface Anime {
 }
 
 const AnimeList: React.FC = () => {
+  // 定义状态变量
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -60,7 +62,14 @@ const AnimeList: React.FC = () => {
     tag?: string;
     name?: string;
   }>();
+  const location = useLocation();
 
+  // 当路径变化时重置页码
+  useEffect(() => {
+    resetPage();
+  }, [location.pathname]);
+
+  // 根据不同的参数获取番剧数据
   useEffect(() => {
     let fetchData;
     if (season) {
@@ -101,24 +110,34 @@ const AnimeList: React.FC = () => {
       });
   }, [page, pageSize, season, category, tag, name]);
 
+  // 重置页码
+  const resetPage = () => {
+    setPage(1);
+  };
+
+  // 显示编辑模态框
   const showEditModal = (anime: Anime) => {
     setEditingAnime(anime);
     setIsModalVisible(true);
   };
 
+  // 取消编辑模态框
   const handleCancel = () => {
     setIsModalVisible(false);
     setEditingAnime(null);
   };
 
+  // 显示新增模态框
   const showAddModal = () => {
     setIsAddModalVisible(true);
   };
 
+  // 取消新增模态框
   const handleAddCancel = () => {
     setIsAddModalVisible(false);
   };
 
+  // 显示删除确认框
   const showDeleteConfirm = (anime: Anime) => {
     Modal.confirm({
       title: `确认删除 ${anime.Name} 吗？`,
@@ -152,10 +171,12 @@ const AnimeList: React.FC = () => {
     });
   };
 
+  // 切换操作按钮的显示状态
   const toggleActions = (id: string) => {
     setVisibleActions(visibleActions === id ? null : id);
   };
 
+  // 渲染番剧项
   const renderAnimeItem = (anime: Anime) => (
     <List.Item key={anime.ID} style={{ padding: "10px 0" }}>
       <Row gutter={16} align="middle">
@@ -268,6 +289,7 @@ const AnimeList: React.FC = () => {
           current={page}
           pageSize={pageSize}
           total={total}
+          showTotal={(total) => `共 ${total} 条`}
           onChange={(page, pageSize) => {
             setPage(page);
             setPageSize(pageSize);
