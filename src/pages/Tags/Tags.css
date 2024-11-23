@@ -1,0 +1,51 @@
+.app-container {
+  margin: 0 auto;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  border-radius: 20px;
+  flex: 1;
+}
+
+.action-button {
+  margin-left: 10px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 8px;
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  padding: 8px;
+  cursor: pointer;
+  border: 1px solid #d9d9d9; /* 添加边框 */
+  border-radius: 4px; /* 添加圆角 */
+}
+
+.edit-icon {
+  margin-left: 8px;
+}
+
+.new-tag-input {
+  width: 78px;
+  margin-right: 8px;
+  vertical-align: top;
+}
+
+.new-tag {
+  background: #fff;
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

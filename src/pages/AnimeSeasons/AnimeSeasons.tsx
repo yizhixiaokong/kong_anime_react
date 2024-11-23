@@ -6,6 +6,7 @@ import spring from "@/assets/spring.png";
 import summer from "@/assets/summer.png";
 import autumn from "@/assets/autumn.png";
 import winter from "@/assets/winter.png";
+import "./AnimeSeasons.css";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -51,15 +52,7 @@ const AnimeSeasons: React.FC = () => {
   const sortedSeasons = ["01", "04", "07", "10"];
 
   return (
-    <div
-      className="app-container"
-      style={{
-        margin: "0 auto",
-        border: "2px solid #d9d9d9",
-        padding: "20px",
-        backgroundColor: "#ffffff",
-      }}
-    >
+    <div className="app-container">
       <Title level={1}>季度番剧</Title>
       {Array.from(seasons.keys()).map((year) => (
         <div key={year}>
@@ -74,15 +67,12 @@ const AnimeSeasons: React.FC = () => {
                       onClick={() => handleSeasonClick(year, season)}
                       cover={
                         <img
-                          style={{ height: "100px" }}
+                          className="season-image"
                           alt="example"
                           src={seassonImage[season]}
                         />
                       }
-                      style={{
-                        cursor: "pointer",
-                        transition: "transform 0.3s",
-                      }}
+                      className="season-card"
                     >
                       <Meta title={seasons.get(year)!.get(season) + "部番剧"} />
                     </Card>

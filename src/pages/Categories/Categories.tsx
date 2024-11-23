@@ -155,15 +155,15 @@ function Categories() {
   };
 
   return (
-    <div style={{ width: "50%", margin: "0 auto" }}>
+    <div className="app-container">
       <h1>分类管理</h1>
-      <div style={{ display: "flex", marginBottom: "20px" }}>
+      <div className="search-bar">
         <Input.Search
           placeholder="搜索分类"
           enterButton={<SearchOutlined />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ borderRadius: "20px", flex: 1 }}
+          className="search-input"
         />
         <Tooltip title="展示全部">
           <Button
@@ -171,7 +171,7 @@ function Categories() {
             shape="circle"
             icon={<UnorderedListOutlined />}
             onClick={fetchAllCategories}
-            style={{ marginLeft: "10px" }}
+            className="action-button"
           />
         </Tooltip>
         <Tooltip title="新增分类">
@@ -180,7 +180,7 @@ function Categories() {
             shape="circle"
             icon={<PlusOutlined />}
             onClick={showAddModal}
-            style={{ marginLeft: "10px" }}
+            className="action-button"
           />
         </Tooltip>
       </div>
@@ -188,17 +188,12 @@ function Categories() {
         {categories.map((category) => (
           <Col xs={24} sm={12} md={8} lg={6} key={category.ID}>
             <Card
+              className="category-card"
               title={
                 <Tooltip title="点击跳转">
                   <span
                     onClick={() => handleCategoryClick(category)}
-                    style={{ cursor: "pointer", transition: "color 0.3s" }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = "#1890ff")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = "inherit")
-                    }
+                    className="category-title"
                   >
                     {category.Name} <LeftSquareOutlined />
                   </span>

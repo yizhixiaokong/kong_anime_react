@@ -1,0 +1,22 @@
+.app-container {
+  margin: 0 auto;
+  border: 2px solid #d9d9d9;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.season-image {
+  height: 100px;
+}
+
+.season-card {
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s; /* 添加动效 */
+  border: 1px solid #d9d9d9; /* 添加边框 */
+  border-radius: 4px; /* 添加圆角 */
+}
+
+.season-card:hover {
+  transform: translateY(-5px); /* 鼠标移上去时上移 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+}

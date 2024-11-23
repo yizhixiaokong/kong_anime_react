@@ -31,14 +31,16 @@ function Home() {
       <Title level={1} className="home-title">
         让我康康小空的根据地里有什么好宝贝
       </Title>
-      <Paragraph>
-        <Text strong>{message || <span>&nbsp;</span>}</Text>
-      </Paragraph>
-      {currentTime && (
-        <Paragraph>
-          <Text strong>当前时间:</Text> {currentTime}
+      <div className="home-content">
+        <Paragraph className="home-paragraph">
+          <Text strong>{message || <span>&nbsp;</span>}</Text>
         </Paragraph>
-      )}
+        {currentTime && (
+          <Paragraph className="home-paragraph">
+            <Text strong>当前时间:</Text> {currentTime}
+          </Paragraph>
+        )}
+      </div>
     </div>
   );
 }

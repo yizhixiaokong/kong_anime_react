@@ -178,48 +178,41 @@ const AnimeList: React.FC = () => {
 
   // 渲染番剧项
   const renderAnimeItem = (anime: Anime) => (
-    <List.Item key={anime.ID} style={{ padding: "10px 0" }}>
+    <List.Item key={anime.ID} className="anime-list-item">
       <Row gutter={16} align="middle">
         <Col span={6}>
           <img
             src={anime.Image}
             alt={anime.Name}
-            style={{ width: "100%", height: "100%" }}
+            className="anime-image"
           />
         </Col>
         <Col span={18}>
-          <div style={{ textAlign: "left", marginLeft: "20px" }}>
+          <div className="anime-details">
             <List.Item.Meta
               title={
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div className="anime-title">
                   {anime.Name}
-
                   <Tooltip title="更多">
                     <MoreOutlined
-                      style={{ marginLeft: "10px" }}
+                      className="more-icon"
                       onClick={() => toggleActions(anime.ID)}
                     />
                   </Tooltip>
                   {visibleActions === anime.ID && (
-                    <div
-                      style={{
-                        display: "flex",
-                        marginLeft: "10px",
-                        transition: "opacity 0.3s, transform 0.3s",
-                        transform: "scaleY(1)",
-                      }}
-                    >
+                    <div className="action-icons">
                       <Tooltip title="评分">
-                        <StarOutlined style={{ marginRight: "10px" }} />
+                        <StarOutlined className="action-icon" />
                       </Tooltip>
                       <Tooltip title="编辑">
                         <EditOutlined
-                          style={{ marginRight: "10px" }}
+                          className="action-icon"
                           onClick={() => showEditModal(anime)}
                         />
                       </Tooltip>
                       <Tooltip title="删除">
                         <DeleteOutlined
+                          className="action-icon"
                           onClick={() => showDeleteConfirm(anime)}
                         />
                       </Tooltip>
@@ -248,23 +241,11 @@ const AnimeList: React.FC = () => {
   );
 
   return (
-    <div
-      className="app-container"
-      style={{
-        margin: "0 auto",
-        border: "2px solid #d9d9d9",
-        padding: "20px",
-        backgroundColor: "#ffffff",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Title level={1}>番剧列表</Title>
+    <div className="app-container">
+      <div className="header">
+        <div className="title-container">
+          <Title level={1}>番剧列表</Title>
+        </div>
         <Tooltip title="新增番剧">
           <Button
             type="primary"
@@ -274,14 +255,14 @@ const AnimeList: React.FC = () => {
           />
         </Tooltip>
       </div>
-      <Divider variant="dashed" style={{ borderColor: "#7cb305" }} />
+      <Divider variant="dashed" className="divider" />
       <List
         itemLayout="vertical"
         size="large"
         dataSource={animes}
         renderItem={renderAnimeItem}
       />
-      <div style={{ textAlign: "right", marginTop: "20px" }}>
+      <div className="pagination">
         <Pagination
           align="end"
           showQuickJumper

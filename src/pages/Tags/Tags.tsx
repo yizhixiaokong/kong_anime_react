@@ -185,15 +185,15 @@ function Tags() {
   };
 
   return (
-    <div className="app-container" style={{ margin: "0 auto" }}>
+    <div className="app-container">
       <h1>标签管理</h1>
-      <div style={{ display: "flex", marginBottom: "20px" }}>
+      <div className="search-bar">
         <Input.Search
           placeholder="搜索标签"
           enterButton={<SearchOutlined />}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ borderRadius: "20px", flex: 1 }}
+          className="search-input"
         />
         <Tooltip title="展示全部">
           <Button
@@ -209,7 +209,7 @@ function Tags() {
                   console.error("Error fetching tags:", error);
                 });
             }}
-            style={{ marginLeft: "10px" }}
+            className="action-button"
           />
         </Tooltip>
         <Tooltip title="编辑标签">
@@ -218,7 +218,7 @@ function Tags() {
             shape="circle"
             icon={<EditOutlined />}
             onClick={toggleEditing}
-            style={{ marginLeft: "10px" }}
+            className="action-button"
           />
         </Tooltip>
         <Tooltip title="删除标签">
@@ -227,22 +227,16 @@ function Tags() {
             shape="circle"
             icon={<DeleteOutlined />}
             onClick={toggleDeleting}
-            style={{ marginLeft: "10px" }}
+            className="action-button"
           />
         </Tooltip>
       </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 8px" }}>
+      <div className="tags-container">
         {tags.map((tag, index) => (
           <Tag
             key={tag.ID}
             color={colors[index % colors.length]}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontSize: "16px",
-              padding: "8px",
-              cursor: "pointer",
-            }}
+            className="tag-item"
             closable={isDeleting}
             onClose={() => handleDelete(tag)}
             onClick={() => handleTagClick(tag)}
@@ -251,7 +245,7 @@ function Tags() {
             {isEditing && (
               <Tooltip title="编辑">
                 <EditOutlined
-                  style={{ marginLeft: "8px" }}
+                  className="edit-icon"
                   onClick={() => handleEdit(tag)}
                 />
               </Tooltip>
@@ -263,7 +257,7 @@ function Tags() {
             ref={inputRef}
             type="text"
             size="small"
-            style={{ width: 78, marginRight: 8, verticalAlign: "top" }}
+            className="new-tag-input"
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputConfirm}
@@ -271,13 +265,7 @@ function Tags() {
           />
         ) : (
           <Tag
-            style={{
-              background: "#fff",
-              borderStyle: "dashed",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            className="new-tag"
             onClick={showInput}
           >
             <PlusOutlined /> 新增标签
