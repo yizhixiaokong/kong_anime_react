@@ -1,16 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Input } from "antd";
 import type { MenuProps } from "antd";
-import logo from "./logo.svg";
+import logo from "./assets/logo.png";
 import "./App.css";
 import Home from "./Home";
 import AnimeList from "./AnimeList";
 import AnimeSeasons from "./AnimeSeasons";
 import Categories from "./Categories";
-import TimeLine from "./TimeLine"
+import TimeLine from "./TimeLine";
 import Tags from "./Tags";
 
+const { Search } = Input;
 const { Header, Content } = Layout;
 
 // 番剧列表、季度番剧、追番时间轴、内容管理（分类管理、标签管理）
@@ -65,7 +66,22 @@ function App() {
       <Layout className="App">
         <Header className="App-header">
           <div className="logo">
-            <img src={logo} className="App-logo" alt="logo" />
+            <div
+              style={{
+                height: "50px",
+                width: "50px",
+                borderRadius: "50px",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={logo}
+                className="App-logo"
+                alt="logo"
+                style={{ transform: "scale(2)", borderRadius: "50px" }}
+              />
+            </div>
+
             <Link to="/" className="App-title">
               小空的根据地
             </Link>
@@ -76,8 +92,15 @@ function App() {
             mode="horizontal"
             items={items}
           />
+          <Search placeholder="input search text" style={{ width: 200 }} />
         </Header>
-        <Content style={{ padding: "20px" }}>
+        <Content
+          style={{
+            padding: "20px",
+            minHeight: "calc(100vh - 64px)",
+            overflow: "auto",
+          }}
+        >
           <AppRoutes />
         </Content>
       </Layout>

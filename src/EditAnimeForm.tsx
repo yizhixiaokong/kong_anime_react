@@ -69,7 +69,7 @@ const EditAnimeForm: React.FC<EditAnimeFormProps> = ({ anime, onClose }) => {
       Episodes: parseInt(values.Episodes, 10), // 确保 Episodes 是数字类型
     };
     console.log(updatedAnime)
-    updateAnime(anime.ID, updatedAnime)
+    updateAnime(anime.ID, {...updatedAnime})
       .then((res) => {
         console.log('res',res)
         if (res?.status === 200) {

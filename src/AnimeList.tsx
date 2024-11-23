@@ -224,8 +224,8 @@ const AnimeList: React.FC = () => {
 
   return (
     <div
+      className="app-container"
       style={{
-        width: "40%",
         margin: "0 auto",
         border: "2px solid #d9d9d9",
         padding: "20px",

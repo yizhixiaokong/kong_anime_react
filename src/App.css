@@ -1,11 +1,18 @@
 .App {
   text-align: center;
   background-color: #e6e6e6;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .App-logo {
   height: 40px;
   pointer-events: none;
+  transform: scale(2);
+}
+.logo {
+  display: flex;
+  align-items: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -15,30 +22,108 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #eda294;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 0 20px;
   font-size: calc(10px + 2vmin);
   color: white;
-  display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .App-link {
-  color: #61dafb;
+  color: #fbb861;
 }
 
 .App-title {
   color: white;
 }
 
+:where(.css-dev-only-do-not-override-1x0dypw) a:hover{
+ color: #dc6d58;
+}
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0deg) scale(2);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg) scale(2);
   }
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark > .ant-menu {
+  background-color: #eda294;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-horizontal
+  > .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-horizontal
+  > .ant-menu-submenu-selected,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-submenu-selected {
+  background-color: #dc6d58;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-horizontal
+  > .ant-menu-item-selected:hover,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-item-selected:hover,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-horizontal
+  > .ant-menu-submenu-selected:hover,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark
+  > .ant-menu.ant-menu-horizontal
+  > .ant-menu-submenu-selected:hover {
+  background-color: #dc6d58;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid {
+  background-color: #dc6d58;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-submenu-popup {
+  background-color: #eda294;
+
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-submenu-popup.ant-menu-submenu{
+  background-color: #eda294;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark.ant-menu-submenu-popup>.ant-menu, :where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark>.ant-menu.ant-menu-submenu-popup>.ant-menu{
+  background-color: #eda294;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark .ant-menu-item-selected, :where(.css-dev-only-do-not-override-1x0dypw).ant-menu-dark>.ant-menu .ant-menu-item-selected{
+  background-color: #dc6d58;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn.ant-btn-circle.ant-btn:hover,:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:hover {
+  background-color: #cd5942;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn.ant-btn-circle.ant-btn:active,:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:active {
+  background-color: #cd5942;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover{
+  background-color: #cd5942; 
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary) {
+  color: rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  border-end-start-radius: 0;
+  border-start-start-radius: 0;
+}
+:where(.css-dev-only-do-not-override-1x0dypw).ant-input-group
+  > .ant-input:first-child,
+:where(.css-dev-only-do-not-override-1x0dypw).ant-input-group
+  .ant-input-group-addon:first-child {
+  border-radius: 20px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.app-container {
+  width: 60%;
 }

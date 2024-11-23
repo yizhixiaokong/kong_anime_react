@@ -57,8 +57,8 @@ const AnimeSeasons: React.FC = () => {
 
   return (
     <div
+      className="app-container"
       style={{
-        width: "60%",
         margin: "0 auto",
         border: "2px solid #d9d9d9",
         padding: "20px",

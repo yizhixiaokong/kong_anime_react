@@ -1,8 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { InputRef } from 'antd';
+import type { InputRef } from "antd";
 import { Tag, Tooltip, Modal, Input, Button, message } from "antd";
-import { EditOutlined, SearchOutlined, UnorderedListOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { fetchTags, updateTag, searchTags, createTag, deleteTag, fetchAnimesByTag } from "./api";
+import {
+  EditOutlined,
+  SearchOutlined,
+  UnorderedListOutlined,
+  PlusOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import {
+  fetchTags,
+  updateTag,
+  searchTags,
+  createTag,
+  deleteTag,
+  fetchAnimesByTag,
+} from "./api";
 import { useNavigate } from "react-router-dom";
 
 const colors = [
@@ -127,7 +140,7 @@ function Tags() {
   };
 
   const handleInputConfirm = () => {
-    if (inputValue && !tags.some(tag => tag.Name === inputValue)) {
+    if (inputValue && !tags.some((tag) => tag.Name === inputValue)) {
       createTag({ Name: inputValue })
         .then(() => {
           message.success(`标签已新增`);
@@ -172,7 +185,7 @@ function Tags() {
   };
 
   return (
-    <div style={{ width: "40%", margin: "0 auto" }}>
+    <div className="app-container" style={{ margin: "0 auto" }}>
       <h1>标签管理</h1>
       <div style={{ display: "flex", marginBottom: "20px" }}>
         <Input.Search
@@ -223,7 +236,13 @@ function Tags() {
           <Tag
             key={tag.ID}
             color={colors[index % colors.length]}
-            style={{ display: "flex", alignItems: "center", fontSize: "16px", padding: "8px", cursor: "pointer" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "16px",
+              padding: "8px",
+              cursor: "pointer",
+            }}
             closable={isDeleting}
             onClose={() => handleDelete(tag)}
             onClick={() => handleTagClick(tag)}
@@ -231,7 +250,10 @@ function Tags() {
             {tag.Name}
             {isEditing && (
               <Tooltip title="编辑">
-                <EditOutlined style={{ marginLeft: "8px" }} onClick={() => handleEdit(tag)} />
+                <EditOutlined
+                  style={{ marginLeft: "8px" }}
+                  onClick={() => handleEdit(tag)}
+                />
               </Tooltip>
             )}
           </Tag>
@@ -241,7 +263,7 @@ function Tags() {
             ref={inputRef}
             type="text"
             size="small"
-            style={{ width: 78, marginRight: 8, verticalAlign: 'top' }}
+            style={{ width: 78, marginRight: 8, verticalAlign: "top" }}
             value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputConfirm}
@@ -249,7 +271,13 @@ function Tags() {
           />
         ) : (
           <Tag
-            style={{ background: "#fff", borderStyle: "dashed", display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{
+              background: "#fff",
+              borderStyle: "dashed",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onClick={showInput}
           >
             <PlusOutlined /> 新增标签
