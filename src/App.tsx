@@ -6,9 +6,9 @@ import Home from "@/pages/Home/Home";
 import AnimeList from "@/pages/AnimeList/AnimeList";
 import AnimeSeasons from "@/pages/AnimeSeasons/AnimeSeasons";
 import Categories from "@/pages/Categories/Categories";
-import TimeLine from "@/pages/TimeLine/TimeLine";
 import Tags from "@/pages/Tags/Tags";
 import NavigationBar from "@/components/NavigationBar";
+import Follow from "@/pages/Follow/Follow";
 
 const { Content } = Layout;
 
@@ -22,7 +22,7 @@ function AppRoutes() {
       <Route path="/animes/tag/:tag" element={<AnimeList />} />
       <Route path="/animes/search/:name" element={<AnimeList />} />
       <Route path="/seasons" element={<AnimeSeasons />} />
-      <Route path="/timeline" element={<TimeLine />} />
+      <Route path="/follow" element={<Follow />} />
       <Route path="/categories" element={<Categories />} />
       <Route path="/tags" element={<Tags />} />
     </Routes>

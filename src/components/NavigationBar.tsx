@@ -17,8 +17,8 @@ const items: MenuProps["items"] = [
     label: <Link to="/seasons">季度番剧</Link>,
   },
   {
-    key: "timeline",
-    label: <Link to="/timeline">追番时间轴</Link>,
+    key: "follow",
+    label: <Link to="/follow">追番管理</Link>,
   },
   {
     key: "content",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Typography } from "antd";
 import { fetchHello } from "@/api/api";
 import "@/pages/Home/Home.css";
+import TimeLine from "./components/TimeLine"; // 引入TimeLine组件
 
 const { Paragraph, Text, Title } = Typography;
 
@@ -40,6 +41,7 @@ function Home() {
             <Text strong>当前时间:</Text> {currentTime}
           </Paragraph>
         )}
+        <TimeLine /> 
       </div>
     </div>
   );
