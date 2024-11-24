@@ -17,6 +17,7 @@ import {
   DeleteOutlined,
   PlusOutlined,
   StarOutlined,
+  HeartOutlined,
   MoreOutlined,
 } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -181,11 +182,7 @@ const AnimeList: React.FC = () => {
     <List.Item key={anime.ID} className="anime-list-item">
       <Row gutter={16} align="middle">
         <Col span={6}>
-          <img
-            src={anime.Image}
-            alt={anime.Name}
-            className="anime-image"
-          />
+          <img src={anime.Image} alt={anime.Name} className="anime-image" />
         </Col>
         <Col span={18}>
           <div className="anime-details">
@@ -193,17 +190,23 @@ const AnimeList: React.FC = () => {
               title={
                 <div className="anime-title">
                   {anime.Name}
-                  <Tooltip title="更多">
-                    <MoreOutlined
-                      className="more-icon"
-                      onClick={() => toggleActions(anime.ID)}
-                    />
-                  </Tooltip>
+                  <div className="action-icons">
+                    <Tooltip title="追番">
+                      <HeartOutlined className="action-icon" />
+                    </Tooltip>
+                    <Tooltip title="评分">
+                      <StarOutlined className="action-icon" />
+                    </Tooltip>
+                    <Tooltip title="更多">
+                      <MoreOutlined
+                        className="more-icon"
+                        onClick={() => toggleActions(anime.ID)}
+                      />
+                    </Tooltip>
+                  </div>
+
                   {visibleActions === anime.ID && (
-                    <div className="action-icons">
-                      <Tooltip title="评分">
-                        <StarOutlined className="action-icon" />
-                      </Tooltip>
+                    <div>
                       <Tooltip title="编辑">
                         <EditOutlined
                           className="action-icon"

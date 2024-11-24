@@ -1,0 +1,147 @@
+.follow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 整体居中 */
+  margin-top: 50px;
+}
+
+.follow-divider {
+  width: 2px;
+  height: 100vh;
+  background-color: black;
+}
+
+.category-section {
+  margin-bottom: 20px;
+  width: 100%; /* 占满父容器宽度 */
+  text-align: center; /* 整体居中 */
+  padding-bottom: 20px; /* 添加内边距 */
+  border-bottom: 2px solid #ddd; /* 添加底部边框作为分隔 */
+}
+
+.category-header {
+  display: flex;
+  justify-content: center; /* 标题和描述整体居中 */
+  align-items: baseline; /* 使标题和描述在同一行 */
+}
+
+.category-header h2 {
+  color: black; /* 标题使用黑色 */
+  font-size: 2rem; /* 更大的标题 */
+  margin-right: 10px; /* 标题和描述之间的间距 */
+}
+
+.category-description {
+  font-size: 0.75rem; /* 更小的文字描述 */
+  color: gray; /* 灰色字体 */
+}
+
+.follow-list-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.follow-list {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.follow-list .ant-list-items {
+  width: 100%;
+}
+
+.app-container {
+  margin: 0 auto;
+  border: 2px solid #d9d9d9;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.header {
+  display: flex;
+  justify-content: center; /* 修改为居中 */
+  align-items: center;
+  position: relative; /* 添加相对定位 */
+}
+
+.header .title-container {
+  flex-grow: 1; /* 使标题容器占用剩余空间 */
+}
+
+.header .ant-btn {
+  position: absolute; /* 绝对定位按钮 */
+  right: 0; /* 右对齐 */
+}
+
+.header-title {
+  color: black; /* 标题使用黑色 */
+  text-align: center; /* 标题居中 */
+}
+
+.divider {
+  border-color: #7cb305;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
+  position: absolute;
+  right: 20px;
+  top: 55px;
+}
+
+.follow-item-content {
+  display: flex;
+  flex-direction: row;
+  div {
+    margin-right: 40px;
+  }
+}
+
+.follow-item-name {
+  font-weight: bold;
+  font-size: 1rem;
+  width: 150px;
+}
+
+.follow-item-season,
+.follow-item-status,
+.follow-item-finishedAt {
+  font-size: 1rem;
+  color: gray;
+  width: 150px;
+}
+
+.follow-item-finishedAt {
+  width: 240px;
+}
+
+.follow-item-status {
+  border: 1px solid;
+  border-radius: 5px;
+  height: 27px;
+  width: 70px;
+}
+
+.chooseBtn {
+  margin-right: 10px;
+}
+
+.chooseBtn.want {
+  background-color: #a1d1cf;
+}
+
+.chooseBtn.watching {
+  background-color: #d6d135;
+}
+
+.chooseBtn.watched {
+  background-color: #da8a8a;
+}
+
+.chooseBtn.active {
+  background-color: #1890ff;
+  color: #fff;
+  border: 1px solid #1890ff;
+}

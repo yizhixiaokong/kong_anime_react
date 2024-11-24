@@ -56,4 +56,11 @@ export function del<T = any>(
   return request<T>({ data, method: "Delete", url });
 }
 
+export function patch<T = any>(
+  url: string,
+  data?: AxiosRequestConfig
+): Promise<T> {
+  return request<T>({ data, method: "PATCH", url });
+}
+
 export default service;
