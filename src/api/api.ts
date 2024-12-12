@@ -119,7 +119,9 @@ export const fetchFollows = (
   page = "1",
   pageSize = "10",
   category?: FollowCategory,
-  status?: FollowStatus
+  status?: FollowStatus,
+  name?: string,
+  sorter?: string
 ) => {
   const url = new URL(`${BASE_URL}/follows`);
   url.searchParams.append("page", page);
@@ -129,6 +131,12 @@ export const fetchFollows = (
   }
   if (status) {
     url.searchParams.append("status", status.toString());
+  }
+  if (name) {
+    url.searchParams.append("name", name);
+  }
+  if (sorter) {
+    url.searchParams.append("sorter", sorter);
   }
   return get(url.toString());
 };
