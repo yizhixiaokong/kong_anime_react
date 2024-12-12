@@ -69,8 +69,18 @@
 }
 
 .header .ant-btn {
-  position: absolute; /* 绝对定位按钮 */
-  right: 0; /* 右对齐 */
+  position: absolute; 
+  display: flex;
+  right: 0; 
+}
+
+.header .action-buttons {
+  display: flex;
+  gap: 10px; /* 按钮之间的间�� */
+}
+
+.header .action-button {
+  position: relative;
 }
 
 .header-title {

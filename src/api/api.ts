@@ -118,7 +118,7 @@ export const updateFollowStatus = (id: string, status: any) =>
 export const fetchFollows = (
   page = "1",
   pageSize = "10",
-  category: FollowCategory,
+  category?: FollowCategory,
   status?: FollowStatus
 ) => {
   const url = new URL(`${BASE_URL}/follows`);

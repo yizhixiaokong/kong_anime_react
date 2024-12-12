@@ -10,7 +10,7 @@ import {
   Popover,
   DatePicker,
 } from "antd";
-import { PlusOutlined, CalendarOutlined, MessageOutlined } from "@ant-design/icons";
+import { PlusOutlined, CalendarOutlined, MessageOutlined, EditOutlined } from "@ant-design/icons";
 import {
   fetchFollowedCategories,
   fetchFollows,
@@ -19,6 +19,7 @@ import {
 } from "@/api/api";
 import { FollowCategory, FollowStatus } from "@/api/followEnums";
 import AddFollowForm from "@/pages/Follow/AddFollowForm";
+import EditFollowTable from "@/pages/Follow/EditFollowTable"; 
 import { RightCircleFilled } from "@ant-design/icons";
 import "./Follow.css";
 
@@ -51,8 +52,8 @@ const Follow: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [follows, setFollows] = useState<{ [key: number]: FollowAnime[] }>({});
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const status: any = { 0: "想看", 1: "在看", 2: "看过" };
-  const colorList: any = { 0: "#a1d1cf", 1: "#d6d135", 2: "#da8a8a" };
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const statusColorList: Record<FollowStatus, string> = { 0: "#a1d1cf", 1: "#d6d135", 2: "#da8a8a" };
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -154,11 +155,11 @@ const Follow: React.FC = () => {
               style={{
                 color:
                   follow.Status || follow.Status === 0
-                    ? colorList[follow.Status]
+                    ? statusColorList[follow.Status]
                     : "",
               }}
             >
-              {follow.Status || follow.Status === 0 ? status[follow.Status] : ""}
+              {follow.Status || follow.Status === 0 ? FollowStatus.getStringMapping()[FollowStatus[follow.Status]] : ""}
             </div>
           </Popover>
           {follow.FinishedAt && (
@@ -203,6 +204,14 @@ const Follow: React.FC = () => {
     categories.forEach((category) => loadFollows(category.value));
   };
 
+  const handleEdit = () => {
+    setIsEditModalVisible(true);
+  };
+
+  const handleEditCancel = () => {
+    setIsEditModalVisible(false);
+  };
+
   const handlePanelChange = (key: string | string[]) => {
     if (key) {
       const category = categories.find(
@@ -214,6 +223,7 @@ const Follow: React.FC = () => {
     }
   };
 
+
   return (
     <div className="app-container">
       <div className="header">
@@ -222,14 +232,26 @@ const Follow: React.FC = () => {
             追番列表
           </Title>
         </div>
-        <Tooltip title="新增追番">
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-            onClick={handleAddFollow}
-          />
-        </Tooltip>
+        <div className="action-buttons">
+          <Tooltip title="新增追番">
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              onClick={handleAddFollow}
+              className="action-button"
+            />
+          </Tooltip>
+          <Tooltip title="编辑追番">
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<EditOutlined />}
+              onClick={handleEdit}
+              className="action-button"
+            />
+          </Tooltip>
+        </div>
       </div>
       <Divider variant="dashed" className="divider" />
       <Collapse
@@ -275,6 +297,17 @@ const Follow: React.FC = () => {
           footer={null}
         >
           <AddFollowForm onClose={handleAddSuccess} />
+        </Modal>
+      )}
+      {isEditModalVisible && (
+        <Modal
+          title="编辑追番"
+          open={isEditModalVisible}
+          onCancel={handleEditCancel}
+          footer={null}
+          width={800}
+        >
+          <EditFollowTable />
         </Modal>
       )}
     </div>

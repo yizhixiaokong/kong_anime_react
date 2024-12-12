@@ -16,7 +16,7 @@ import {
   SearchOutlined,
   PlusOutlined,
   UnorderedListOutlined,
-  LeftSquareOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import {
@@ -198,7 +198,7 @@ function Categories() {
                     onClick={() => handleCategoryClick(category)}
                     className="category-title"
                   >
-                    {category.Name} <LeftSquareOutlined />
+                    {category.Name} <LinkOutlined />
                   </span>
                 </Tooltip>
               }
