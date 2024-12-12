@@ -87,15 +87,15 @@ const AddFollowForm: React.FC<AddFollowFormProps> = ({ onClose }) => {
         rules={[{ required: true, message: "请选择分类!" }]}
       >
         <Select>
-          <Option value={FollowCategory.Classic}>经典</Option>
-          <Option value={FollowCategory.HighQuality}>高质量</Option>
-          <Option value={FollowCategory.New}>新番</Option>
-          <Option value={FollowCategory.ToiletPaper}>厕纸</Option>
-          <Option value={FollowCategory.Masterpiece}>神作</Option>
+          {FollowCategory.getAllValues().map((category) => (
+            <Option key={category} value={category}>
+              {FollowCategory.getStringMapping()[FollowCategory[category]]}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 8, span: 16 }} style={{ textAlign: 'right' }}>
         <Button type="primary" htmlType="submit">
           提交
         </Button>
