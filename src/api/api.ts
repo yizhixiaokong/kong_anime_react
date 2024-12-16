@@ -129,7 +129,7 @@ export const fetchFollows = (
   if (category||category===0) {
     url.searchParams.append("category", category.toString());
   }
-  if (status) {
+  if (status||status===0) {
     url.searchParams.append("status", status.toString());
   }
   if (name) {
